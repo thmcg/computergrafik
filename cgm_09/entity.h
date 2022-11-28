@@ -11,6 +11,7 @@ class Entity
     void setModel(std::string model);
     void setPosition(Vector3 position);
     void setRotation(Vector3 rotation);
+    void setScale(float scale);
     void addFlag(std::string flag);
     void load();
     void update(double time);

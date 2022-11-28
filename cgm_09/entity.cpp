@@ -14,13 +14,20 @@ void Entity::setModel(std::string model)
 {
     this->model = model;
 }
+
 void Entity::setPosition(Vector3 position)
 {
     this->position = position;
 }
+
 void Entity::setRotation(Vector3 rotation)
 {
     this->rotation = rotation;
+}
+
+void Entity::setScale(float scale)
+{
+    this->scale = scale;
 }
 
 void Entity::addFlag(std::string flag)

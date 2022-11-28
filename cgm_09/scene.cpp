@@ -23,6 +23,10 @@ Scene::Scene(std::string filename)
         {
             entities[entities.size() - 1]->setRotation(deg2rad(reader->getVector3()));
         }
+        else if (type == "s")
+        {
+            entities[entities.size() - 1]->setScale(reader->getFloat());
+        }
         else if (type == "f")
         {
             entities[entities.size() - 1]->addFlag(reader->getString());
