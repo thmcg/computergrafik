@@ -3,28 +3,28 @@
 
 Model::Model(std::string filename)
 {
-    FileReader* reader = new FileReader(filename);
-    while (reader->hasLine())
+    FileReader reader = FileReader(filename);
+    while (reader.hasLine())
     {
-        std::string type = reader->getString();
+        std::string type = reader.getString();
         if (type == "m")
         {
             //mesh
-            std::string m = reader->getString();
+            std::string m = reader.getString();
             this->mesh = new Mesh(m);
         }
         else if (type == "s")
         {
             //shader
-            std::string vs = reader->getString();
-            std::string fs = reader->getString();
+            std::string vs = reader.getString();
+            std::string fs = reader.getString();
             this->shader = new Shader(vs, fs);
         }
         else if (type == "t")
         {
             //textures
-            std::string slot = reader->getString();
-            Texture* tex = new Texture(reader->getString().c_str());
+            std::string slot = reader.getString();
+            Texture* tex = new Texture(reader.getString().c_str());
             this->textures.insert(std::pair<std::string,Texture*>(slot, tex));
         }
     }

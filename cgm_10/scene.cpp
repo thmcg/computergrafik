@@ -3,37 +3,37 @@
 
 Scene::Scene(std::string filename)
 {
-    FileReader* reader = new FileReader(filename);
-    while (reader->hasLine())
+    FileReader reader = FileReader(filename);
+    while (reader.hasLine())
     {
-        std::string type = reader->getString();
+        std::string type = reader.getString();
         if (type == "e")
         {
-            entities.push_back(new Entity(reader->getString()));
+            entities.push_back(new Entity(reader.getString()));
         }
         else if (type == "m")
         {
-            entities[entities.size() - 1]->setModel(reader->getString());
+            entities[entities.size() - 1]->setModel(reader.getString());
         }
         else if (type == "p")
         {
-            entities[entities.size() - 1]->setPosition(reader->getVector3());
+            entities[entities.size() - 1]->setPosition(reader.getVector3());
         }
         else if (type == "r")
         {
-            entities[entities.size() - 1]->setRotation(deg2rad(reader->getVector3()));
+            entities[entities.size() - 1]->setRotation(deg2rad(reader.getVector3()));
         }
         else if (type == "s")
         {
-            entities[entities.size() - 1]->setScale(reader->getFloat());
+            entities[entities.size() - 1]->setScale(reader.getFloat());
         }
         else if (type == "f")
         {
-            entities[entities.size() - 1]->addFlag(reader->getString());
+            entities[entities.size() - 1]->addFlag(reader.getString());
         }
         else if (type == "l")
         {
-            entities[entities.size() - 1]->addLogic(reader->getString());
+            entities[entities.size() - 1]->addLogic(reader.getString());
         }
     }
     for (int i = 0; i < entities.size(); i++)

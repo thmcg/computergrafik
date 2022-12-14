@@ -20,27 +20,27 @@ Mesh::Mesh(std::string filename)
     std::vector<Vector3> vn;
     std::vector<std::string> f;
 
-    FileReader* reader = new FileReader(filename);
-    while (reader->hasLine())
+    FileReader reader = FileReader(filename);
+    while (reader.hasLine())
     {
-        std::string type = reader->getString();
+        std::string type = reader.getString();
         if (type == "v")
         {
-            v.push_back(reader->getVector3());
+            v.push_back(reader.getVector3());
         }
         else if (type == "vt")
         {
-            vt.push_back(reader->getVector2());
+            vt.push_back(reader.getVector2());
         }
         else if (type == "vn")
         {
-            vn.push_back(reader->getVector3());
+            vn.push_back(reader.getVector3());
         }
         else if (type == "f")
         {
             for (int i = 0; i < 3; i++)
             {
-                f.push_back(reader->getString());
+                f.push_back(reader.getString());
             }
         }
     }
