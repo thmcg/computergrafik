@@ -32,16 +32,12 @@ Model::Model(std::string filename)
 
 void Model::render(Matrix projectionMatrix, Matrix viewMatrix, Vector3 sunLight, Vector3 cameraPosition)
 {
-    Vector3 pos;
-    pos.x = position.x;
-    pos.y = position.y;
-    pos.z = position.z;
+    Vector3 pos = position;
     if (this->fixed)
     {
-        pos.x += cameraPosition.x;
-        pos.y += cameraPosition.y;
-        pos.z += cameraPosition.z;
+        pos = position + cameraPosition;
     }
+
     shader->activate();
     shader->setMatrix("ProjectionMatrix", projectionMatrix);
     shader->setMatrix("ViewMatrix", viewMatrix);
