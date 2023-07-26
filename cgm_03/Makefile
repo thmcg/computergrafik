@@ -13,10 +13,10 @@ else ifeq ($(findstring Linux,$(UNAME)),Linux)
 	INC = 
 	LIB = 
 	LNK = -lglfw -lrt -lm -ldl -lGL
-	OPT =
+	OPT = -std=c++20
 endif
 
-bin/engine: obj/main.o obj/graphics.o obj/window.o | bin
+bin/engine: obj/main.o obj/graphics.o obj/window.o obj/game.o | bin
 	g++ -g obj/*.o -o bin/engine $(LIB) $(LNK) $(OPT)
 
 obj/main.o: main.cpp | obj
@@ -27,6 +27,9 @@ obj/graphics.o: graphics.cpp | obj
 
 obj/window.o: window.cpp | obj
 	g++ -g -c window.cpp -o obj/window.o $(INC) $(OPT)
+
+obj/game.o: game.cpp | obj
+	g++ -g -c game.cpp -o obj/game.o $(INC) $(OPT)
 
 bin:
 	mkdir -p bin

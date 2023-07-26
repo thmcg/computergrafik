@@ -13,10 +13,10 @@ else ifeq ($(findstring Linux,$(UNAME)),Linux)
 	INC = -I../libraries/glad/include
 	LIB = 
 	LNK = -lglfw -lrt -lm -ldl -lGL
-	OPT =
+	OPT = -std=c++20
 endif
 
-bin/engine: obj/main.o obj/graphics.o obj/window.o obj/game.o obj/shader.o obj/mesh.o obj/texture.o obj/filereader.o obj/entity.o obj/model.o obj/scene.o | bin
+bin/engine: obj/main.o obj/graphics.o obj/window.o obj/game.o obj/shader.o obj/mesh.o obj/texture.o obj/filereader.o obj/model.o | bin
 	g++ -g obj/*.o -o bin/engine $(LIB) $(LNK) $(OPT)
 
 obj/main.o: main.cpp | obj
@@ -43,14 +43,8 @@ obj/texture.o: texture.cpp | obj
 obj/filereader.o: filereader.cpp | obj
 	g++ -g -c filereader.cpp -o obj/filereader.o $(INC) $(OPT)
 
-obj/entity.o: entity.cpp | obj
-	g++ -g -c entity.cpp -o obj/entity.o $(INC) $(OPT)
-
 obj/model.o: model.cpp | obj
 	g++ -g -c model.cpp -o obj/model.o $(INC) $(OPT)
-
-obj/scene.o: scene.cpp | obj
-	g++ -g -c scene.cpp -o obj/scene.o $(INC) $(OPT)
 
 bin:
 	mkdir -p bin
