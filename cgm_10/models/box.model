@@ -1,0 +1,5 @@
+m meshes/box.obj
+s shaders/vertex_shader_lit.glsl shaders/fragment_shader_lit_drn.glsl
+t Diffuse textures/box_diffuse.png
+t NormalMap textures/box_normal.png
+t Roughness textures/box_roughness.png

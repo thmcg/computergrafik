@@ -1,0 +1,80 @@
+e Stars
+m models/cubemap.model
+p 0.0 0.0 0.0
+r 0.0 0.0 0.0
+f fixed
+f nodepth
+l earthRotation
+
+e Earth
+m models/earth.model
+p 1.0 0.2 -1.0
+r 0.0 180.0 0.0
+f fixed
+f nodepth
+l earthRotation
+
+e Clouds
+m models/clouds.model
+p 1.0 0.2 -1.0
+r 0.0 180.0 0.0
+f fixed
+f nodepth
+l earthRotation
+
+e Athmosphere
+m models/athmosphere.model
+p 1.0 0.2 -1.0
+r 0.0 180.0 0.0
+f fixed
+f nodepth
+l earthRotation
+
+e THM
+m models/thm.model
+p 0.0 0.0 12.0
+r 0.0 180.0 0.0
+
+e THM
+m models/thm.model
+p 0.0 0.0 -12.0
+r 0.0 0.0 0.0
+
+e THM
+m models/thm.model
+p -12.0 0.0 0.0
+r 0.0 90.0 0.0
+
+e THM
+m models/thm.model
+p 12.0 0.0 0.0
+r 0.0 -90.0 0.0
+
+e LandingPad
+m models/landingpad.model
+p 0.0 -1.7 0.0
+r 0.0 0.0 0.0
+
+e Box1
+m models/box.model
+s 0.5
+p -4.8 -1.7 -7.5
+r 0.0 -11.1 0.0
+
+e Box2
+m models/box.model
+s 0.5
+p -6.0 -1.7 -7.2
+r 0.0 18.0 0.0
+
+e Box3
+m models/box.model
+s 0.5
+p -5.8 -1.7 -8.4
+r 0.0 5.6 0.0
+
+e Box4
+m models/box.model
+s 0.5
+p -5.4 -0.7 -7.8
+r 0.0 60.8 0.0

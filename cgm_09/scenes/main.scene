@@ -1,0 +1,18 @@
+e Sky
+m models/cubemap.model
+p 0.0 0.0 0.0
+r 0.0 0.0 0.0
+f fixed
+f nodepth
+
+e Earth
+m models/earth.model
+p 0.0 1.0 -2.0
+r 0.0 0.0 0.0
+f fixed
+f nodepth
+
+e THM
+m models/thm.model
+p 1.0 0.0 0.0
+r 0.0 0.0 0.0
