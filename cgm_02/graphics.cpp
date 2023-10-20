@@ -36,7 +36,6 @@ bool graphicsStart(Settings props)
     glfwSwapInterval(props.vsync ? 1 : 0);
     if (settings.msaa) glEnable(GL_MULTISAMPLE);
     if (settings.culling) glEnable(GL_CULL_FACE);
-    if (settings.depth) glEnable(GL_DEPTH_TEST);
 
     glClearColor(0.29f,0.36f,0.4f,1.0f);
 
@@ -48,7 +47,6 @@ void graphicsLoop()
     setViewport();
     
     glClear(GL_COLOR_BUFFER_BIT);
-    glClear(GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

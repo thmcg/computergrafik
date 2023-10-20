@@ -8,7 +8,6 @@ struct Settings
     bool msaa = true;
     bool vsync = true;
     bool culling = true;
-    bool depth = true;
     double walkSpeed = 1.0;
     double mouseSpeed = 1.0;
 };

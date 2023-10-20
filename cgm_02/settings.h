@@ -8,5 +8,4 @@ struct Settings
     bool msaa = true;
     bool vsync = true;
     bool culling = true;
-    bool depth = true;
 };
