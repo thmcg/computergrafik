@@ -34,6 +34,6 @@ class Shader
     private:
     unsigned int shaderProgram;
     std::string textureSlots[16] = { "" };
-    bool shaderCompile(std::string filename, unsigned int* shader, unsigned int type);
-    char* readFile(std::string filename);
+    bool shaderCompile(std::string filename, unsigned int *shader, unsigned int type);
+    char *readFile(std::string filename);
 };

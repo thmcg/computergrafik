@@ -42,7 +42,7 @@ Model::Model(std::string filename)
         {
             //textures
             std::string slot = reader.getString();
-            Texture* tex = new Texture(reader.getString().c_str());
+            Texture *tex = new Texture(reader.getString().c_str());
             this->textures.insert(std::pair<std::string,Texture*>(slot, tex));
         }
     }

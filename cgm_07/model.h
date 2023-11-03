@@ -36,7 +36,7 @@ class Model
     Vector3 position;
     Vector3 rotation;
     float scale = 1;
-    Shader* shader;
-    Mesh* mesh;
+    Shader *shader;
+    Mesh *mesh;
     std::map<std::string, Texture*> textures;
 };

@@ -32,9 +32,9 @@ static int viewportHeight = 0;
 static int resizeViewport = false;
 static Matrix viewMatrix;
 static Matrix projectionMatrix;
-static Shader* shader;
-static Mesh* mesh;
-static Texture* texture;
+static Shader *shader;
+static Mesh *mesh;
+static Texture *texture;
 
 static void setViewport()
 {

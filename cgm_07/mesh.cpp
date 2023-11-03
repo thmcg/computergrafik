@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-Mesh::Mesh(Vertex* vertices, int vc)
+Mesh::Mesh(Vertex *vertices, int vc)
 {
     init(vertices, vc);
 }
@@ -78,7 +78,7 @@ Mesh::Mesh(std::string filename)
     init(reinterpret_cast<Vertex*>(vertices.data()), vertices.size());
 }
 
-void Mesh::init(Vertex* vertices, int vc)
+void Mesh::init(Vertex *vertices, int vc)
 {
     vertexCount = vc;
     glGenVertexArrays(1, &VAO);

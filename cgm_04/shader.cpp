@@ -80,19 +80,20 @@ void Shader::setVector3(std::string key, Vector3 v)
     glUniform3fv(location, 1, v.values);
 }
 
-bool Shader::shaderCompile(std::string filename, unsigned int* shader, unsigned int type)
+bool Shader::shaderCompile(std::string filename, unsigned int *shader, unsigned int type)
 {
-    char * shaderSource = readFile(filename);
+    char *shaderSource = readFile(filename);
 
     int success;
-    char infoLog[512];
 
     *shader = glCreateShader(type);
     glShaderSource(*shader, 1, &shaderSource, NULL);
     glCompileShader(*shader);
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &success);
+    delete[] shaderSource;
     if (!success)
     {
+        char infoLog[512];
         glGetShaderInfoLog(*shader, 512, NULL, infoLog);
         std::cout << "Failed to compile shader: " << filename << std::endl << infoLog << std::endl;
         return false;
@@ -100,7 +101,7 @@ bool Shader::shaderCompile(std::string filename, unsigned int* shader, unsigned 
     return true;
 }
 
-char* Shader::readFile(std::string filename)
+char *Shader::readFile(std::string filename)
 {
     char * shaderSource = 0;
     long length;
@@ -111,7 +112,7 @@ char* Shader::readFile(std::string filename)
         fseek (f, 0, SEEK_END);
         length = ftell (f);
         fseek (f, 0, SEEK_SET);
-        shaderSource = (char*)malloc (length+1);
+        shaderSource = new char[length + 1];
         if (shaderSource)
         {
             fread (shaderSource, 1, length, f);

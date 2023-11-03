@@ -58,7 +58,7 @@ void graphicsUpdateCamera(Matrix m)
 int graphicsLoadModel(std::string filename)
 {
     int id = modelId++;
-    Model* m = new Model(filename);
+    Model *m = new Model(filename);
     models.insert(std::pair<int,Model*>(id, m));
     return id;
 }

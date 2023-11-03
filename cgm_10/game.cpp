@@ -51,7 +51,7 @@ void gameSetMouse(double dx, double dy)
 
 void gamePushScene(std::string filename)
 {
-    Scene* s = new Scene(filename);
+    Scene *s = new Scene(filename);
     scenes.push_back(s);
 }
 

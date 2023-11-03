@@ -25,16 +25,16 @@ void graphicsSetWindowSize(int, int);
 void gameSetKey(int, int);
 void gameSetMouse(double, double);
 
-static GLFWwindow* window;
+static GLFWwindow *window;
 static int windowWidth, windowHeight;
 static bool isFullscreen = false;
 
-static void onError(int error, const char* description)
+static void onError(int error, const char *description)
 {
     std::cout << "Error: " << description << std::endl;
 }
 
-static void onKeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mods)
+static void onKeyboardInput(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     {
@@ -44,15 +44,15 @@ static void onKeyboardInput(GLFWwindow* window, int key, int scancode, int actio
     {
         if (isFullscreen)
         {
-            GLFWmonitor * monitor = glfwGetPrimaryMonitor();
-            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+            GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode *mode = glfwGetVideoMode(monitor);
             glfwSetWindowMonitor(window, NULL, (mode->width - windowWidth) / 2, (mode->height - windowHeight) / 2, windowWidth, windowHeight, GLFW_DONT_CARE);
         }
         else
         {
             glfwGetWindowSize(window, &windowWidth, &windowHeight);
-            GLFWmonitor * monitor = glfwGetPrimaryMonitor();
-            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+            GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode *mode = glfwGetVideoMode(monitor);
             glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         }
         isFullscreen = !isFullscreen;
@@ -63,12 +63,12 @@ static void onKeyboardInput(GLFWwindow* window, int key, int scancode, int actio
     }
 }
 
-static void onFramebufferSizeChanged(GLFWwindow* window, int width, int height)
+static void onFramebufferSizeChanged(GLFWwindow *window, int width, int height)
 {
     graphicsSetWindowSize(width, height);
 }
 
-static void onMouseMoved(GLFWwindow* window, double xpos, double ypos)
+static void onMouseMoved(GLFWwindow *window, double xpos, double ypos)
 {
     static double mouseLastX = xpos;
     static double mouseLastY = ypos;
@@ -124,8 +124,8 @@ bool windowCreate(Settings props)
 
     if (props.fullscreen)
     {
-        GLFWmonitor * monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode *mode = glfwGetVideoMode(monitor);
         window = glfwCreateWindow(mode->width, mode->height, "CGM", monitor, NULL);
     }
     else
@@ -157,7 +157,7 @@ bool windowCreate(Settings props)
 /**
  * Called once per frame. Handles Window Events and prepares
  */
-bool windowLoop(double* time)
+bool windowLoop(double *time)
 {
     if (glfwWindowShouldClose(window)) return false;
 

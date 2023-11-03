@@ -20,12 +20,12 @@
 #include <GLFW/glfw3.h>
 #include "mesh.h"
 
-Mesh::Mesh(Vertex* vertices, int vc)
+Mesh::Mesh(Vertex *vertices, int vc)
 {
     init(vertices, vc);
 }
 
-void Mesh::init(Vertex* vertices, int vc)
+void Mesh::init(Vertex *vertices, int vc)
 {
     vertexCount = vc;
     glGenVertexArrays(1, &VAO);
