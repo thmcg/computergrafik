@@ -22,7 +22,7 @@
 
 void graphicsUpdateCamera(Matrix, Vector3);
 
-static bool gameKeyState[256] = {};
+static bool gameKeyState[384] = {};
 static Vector3 cameraPosition = {0.0, 0.0, 2.0};
 static double cameraYaw = 0;
 static double cameraPitch = 0;
@@ -31,7 +31,10 @@ double mouseSpeed = 1.0;
 
 void gameSetKey(int key, int state)
 {
-    gameKeyState[key] = state > 0;
+    if (key >= 0 && key < 384)
+    {
+        gameKeyState[key] = state > 0;
+    }
 }
 
 void gameSetMouse(double dx, double dy)
