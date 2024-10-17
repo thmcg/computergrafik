@@ -1,3 +1,6 @@
 .DS_Store
-cgm_*/bin/
-cgm_*/obj/
+Thumbs.db
+.vscode/settings.json
+bin/
+obj/
+*.zip

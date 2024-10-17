@@ -1,131 +1,118 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
- * 
+ * Copyright © 2021-2024 Tobias Reimann
+ * Copyright © 2024 Lukas Scheurer: Rewritten in modern C++
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include "settings.h"
+#include "window.h"
 
-void graphicsSetWindowSize(int, int);
+Window::Window(const std::string &title, Settings settings)
+    : width(settings.width), height(settings.height), fullscreen(settings.fullscreen), resized(true), previousTime(0.0), frameCount(0)
+{
+    glfwSetErrorCallback(onError);
+    if (!glfwInit())
+    {
+        throw std::runtime_error("Failed to initialize GLFW");
+    }
 
-static GLFWwindow *window;
-static int windowWidth, windowHeight;
-static bool isFullscreen = false;
+    if (settings.msaa) glfwWindowHint(GLFW_SAMPLES, 4);
+    if (settings.fullscreen)
+    {
+        GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+        window = glfwCreateWindow(mode->width, mode->height, title.c_str(), monitor, nullptr);
+    }
+    else
+    {
+        window = glfwCreateWindow(settings.width, settings.height, title.c_str(), nullptr, nullptr);
+    }
 
-static void onError(int error, const char *description)
+    if (!window)
+    {
+        glfwTerminate();
+        throw std::runtime_error("Failed to open window");
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, onKeyboardInput);
+    glfwSetFramebufferSizeCallback(window, onFramebufferSizeChanged);
+    glfwGetFramebufferSize(window, &width, &height);
+    glfwSetWindowUserPointer(window, this);
+}
+
+Window::~Window()
+{
+    glfwDestroyWindow(window);
+    glfwTerminate();
+}
+
+void Window::onError(int error, const char *description)
 {
     std::cout << "Error: " << description << std::endl;
 }
 
-static void onKeyboardInput(GLFWwindow *window, int key, int scancode, int action, int mods)
+void Window::onKeyboardInput(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
+    Window *instance = static_cast<Window *>(glfwGetWindowUserPointer(window));
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
     else if (key == GLFW_KEY_M && action == GLFW_PRESS)
     {
-        if (isFullscreen)
+        if (instance->fullscreen)
         {
             GLFWmonitor *monitor = glfwGetPrimaryMonitor();
             const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-            glfwSetWindowMonitor(window, NULL, (mode->width - windowWidth) / 2, (mode->height - windowHeight) / 2, windowWidth, windowHeight, GLFW_DONT_CARE);
+            glfwSetWindowMonitor(window, nullptr, (mode->width - instance->width) / 2, (mode->height - instance->height) / 2, instance->width, instance->height, GLFW_DONT_CARE);
         }
         else
         {
-            glfwGetWindowSize(window, &windowWidth, &windowHeight);
+            glfwGetWindowSize(window, &instance->width, &instance->height);
             GLFWmonitor *monitor = glfwGetPrimaryMonitor();
             const GLFWvidmode *mode = glfwGetVideoMode(monitor);
             glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         }
-        isFullscreen = !isFullscreen;
+        instance->fullscreen = !instance->fullscreen;
     }
 }
 
-static void onFramebufferSizeChanged(GLFWwindow *window, int width, int height)
+void Window::onFramebufferSizeChanged(GLFWwindow *window, int width, int height)
 {
-    graphicsSetWindowSize(width, height);
+    Window *instance = static_cast<Window *>(glfwGetWindowUserPointer(window));
+    instance->width = width;
+    instance->height = height;
+    instance->resized = true;
 }
 
-static void printFps()
+void Window::printFps()
 {
-    static double previousTime = 0;
-    static int frameCount = 0;
-    
     double currentTime = glfwGetTime();
     if (currentTime - previousTime >= 1.0)
     {
-        std::cout << "FPS: " << frameCount << std::endl;
+        uint32_t fps = frameCount;
+        std::cout << "FPS: " << fps << std::endl;
 
         frameCount = 0;
         previousTime = currentTime;
     }
+
     frameCount++;
 }
 
-/**
- * Create a new windows.
- */
-bool windowCreate(Settings props)
-{
-    windowWidth = props.width;
-    windowHeight = props.height;
-    isFullscreen = props.fullscreen;
-
-    glfwSetErrorCallback(onError);
-    
-    if (!glfwInit())
-    {
-        std::cout << "Error initilizing graphics.";
-        return false;
-    }
-
-    if (props.msaa) glfwWindowHint(GLFW_SAMPLES, 4);
-
-    if (props.fullscreen)
-    {
-        GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-        const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-        window = glfwCreateWindow(mode->width, mode->height, "CGM", monitor, NULL);
-    }
-    else
-    {
-        window = glfwCreateWindow(props.width, props.height, "CGM", NULL, NULL);
-    }
-    if (!window)
-    {
-        glfwTerminate();
-        std::cout << "Error opening window.";
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, onKeyboardInput);
-    glfwSetFramebufferSizeCallback(window, onFramebufferSizeChanged);
-    int w, h;
-    glfwGetFramebufferSize(window, &w, &h);
-    graphicsSetWindowSize(w, h);
-    return true;
-}
-
-/**
- * Called once per frame. Handles Window Events and prepares
- */
-bool windowLoop()
+bool Window::loop()
 {
     if (glfwWindowShouldClose(window)) return false;
 
@@ -134,10 +121,4 @@ bool windowLoop()
     printFps();
 
     return true;
-}
-
-void windowDestroy()
-{
-    glfwDestroyWindow(window);
-    glfwTerminate();
 }
