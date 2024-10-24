@@ -29,11 +29,23 @@ int main()
     {
         std::cout << "Engine starting..." << std::endl;
 
-        Settings settings(false, 1280, 720, true, true, true, false);
+        Settings settings = {
+            .fullscreen = false,
+            .width = 1280,
+            .height = 720,
+            .msaa = true,
+            .vsync = true,
+            .culling = true,
+            .depth = false
+        };
 
-        auto window = std::make_shared<Window>("Computergrafik", settings);
+        Window window("Computergrafik", settings);
         Renderer renderer(settings, window);
-        renderer.loop();
+
+        while (window.loop())
+        {
+            renderer.loop();
+        }
     }
     catch (const std::exception &e)
     {

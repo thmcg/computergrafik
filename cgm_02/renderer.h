@@ -18,28 +18,28 @@
  */
 
 #pragma once
+
 #define GLFW_INCLUDE_GLEXT
-#include "GLFW/glfw3.h"
+
 #include "cgmath.h"
 #include "settings.h"
 #include "window.h"
 
+#include <GLFW/glfw3.h>
 #include <iostream>
 #include <memory>
 
 class Renderer
 {
   public:
-    Renderer(Settings settings, std::shared_ptr<Window> window);
+    Renderer(const Settings &settings, Window &window);
     ~Renderer();
     void loop();
 
   private:
     void setViewport();
-    std::shared_ptr<Window> window;
-    Settings settings;
-    int viewportWidth;
-    int viewportHeight;
-    int resizeViewport;
-    Matrix4 viewMatrix;
+    int viewportWidth = 0;
+    int viewportHeight = 0;
+    bool resizeViewport = false;
+    Matrix4 viewMatrix = {};
 };

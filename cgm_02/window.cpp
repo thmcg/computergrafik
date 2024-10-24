@@ -19,10 +19,14 @@
 
 #include "window.h"
 
-Window::Window(const std::string &title, Settings settings)
-    : width(settings.width), height(settings.height), fullscreen(settings.fullscreen), resized(true), previousTime(0.0), frameCount(0)
+Window::Window(const std::string &title, const Settings &settings)
+    : width(settings.width), height(settings.height), fullscreen(settings.fullscreen)
 {
-    glfwSetErrorCallback(onError);
+    glfwSetErrorCallback([](int error, const char *description)
+    {
+        std::cerr << "GLFW Error: " << description << std::endl;
+    });
+
     if (!glfwInit())
     {
         throw std::runtime_error("Failed to initialize GLFW");
@@ -45,11 +49,49 @@ Window::Window(const std::string &title, Settings settings)
         glfwTerminate();
         throw std::runtime_error("Failed to open window");
     }
+
     glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, onKeyboardInput);
-    glfwSetFramebufferSizeCallback(window, onFramebufferSizeChanged);
-    glfwGetFramebufferSize(window, &width, &height);
     glfwSetWindowUserPointer(window, this);
+
+    glfwGetFramebufferSize(window, &width, &height);
+    glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int width, int height)
+    {
+        Window *self = static_cast<Window *>(glfwGetWindowUserPointer(window));
+
+        self->width = width;
+        self->height = height;
+
+        for (auto &callback : self->sizeChangedCallbacks)
+        {
+            callback(width, height);
+        }
+    });
+    glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods)
+    {
+        Window *self = static_cast<Window *>(glfwGetWindowUserPointer(window));
+
+        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        {
+            glfwSetWindowShouldClose(window, GL_TRUE);
+        }
+        else if (key == GLFW_KEY_M && action == GLFW_PRESS)
+        {
+            if (self->fullscreen)
+            {
+                GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+                const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+                glfwSetWindowMonitor(window, nullptr, (mode->width - self->width) / 2, (mode->height - self->height) / 2, self->width, self->height, GLFW_DONT_CARE);
+            }
+            else
+            {
+                glfwGetWindowSize(window, &self->width, &self->height);
+                GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+                const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+                glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+            }
+            self->fullscreen = !self->fullscreen;
+        }
+    });
 }
 
 Window::~Window()
@@ -58,43 +100,15 @@ Window::~Window()
     glfwTerminate();
 }
 
-void Window::onError(int error, const char *description)
+bool Window::loop()
 {
-    std::cout << "Error: " << description << std::endl;
-}
+    if (glfwWindowShouldClose(window)) return false;
 
-void Window::onKeyboardInput(GLFWwindow *window, int key, int scancode, int action, int mods)
-{
-    Window *instance = static_cast<Window *>(glfwGetWindowUserPointer(window));
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    }
-    else if (key == GLFW_KEY_M && action == GLFW_PRESS)
-    {
-        if (instance->fullscreen)
-        {
-            GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-            const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-            glfwSetWindowMonitor(window, nullptr, (mode->width - instance->width) / 2, (mode->height - instance->height) / 2, instance->width, instance->height, GLFW_DONT_CARE);
-        }
-        else
-        {
-            glfwGetWindowSize(window, &instance->width, &instance->height);
-            GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-            const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-        }
-        instance->fullscreen = !instance->fullscreen;
-    }
-}
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+    printFps();
 
-void Window::onFramebufferSizeChanged(GLFWwindow *window, int width, int height)
-{
-    Window *instance = static_cast<Window *>(glfwGetWindowUserPointer(window));
-    instance->width = width;
-    instance->height = height;
-    instance->resized = true;
+    return true;
 }
 
 void Window::printFps()
@@ -112,13 +126,8 @@ void Window::printFps()
     frameCount++;
 }
 
-bool Window::loop()
+void Window::onSizeChanged(std::function<void(int width, int height)> callback)
 {
-    if (glfwWindowShouldClose(window)) return false;
-
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-    printFps();
-
-    return true;
+    callback(width, height);
+    sizeChangedCallbacks.push_back(callback);
 }

@@ -18,30 +18,29 @@
  */
 
 #pragma once
+
 #define GLFW_INCLUDE_GLEXT
-#include "GLFW/glfw3.h"
+
 #include "settings.h"
 
+#include <GLFW/glfw3.h>
 #include <iostream>
 
 class Window
 {
   public:
-    Window(const std::string &title, Settings settings);
+    Window(const std::string &title, const Settings &settings);
     ~Window();
-    void printFps();
     bool loop();
-
-    int width, height;
-    bool fullscreen;
-    bool resized;
+    void printFps();
+    void onSizeChanged(std::function<void(int width, int height)> callback);
 
   private:
-    static void onError(int error, const char *description);
-    static void onKeyboardInput(GLFWwindow *window, int key, int scancode, int action, int mods);
-    static void onFramebufferSizeChanged(GLFWwindow *window, int width, int height);
-
-    GLFWwindow *window;
-    double previousTime;
-    int frameCount;
+    GLFWwindow *window = nullptr;
+    int width = 0;
+    int height = 0;
+    bool fullscreen = false;
+    double previousTime = 0.0;
+    int frameCount = 0;
+    std::vector<std::function<void(int width, int height)>> sizeChangedCallbacks = {};
 };

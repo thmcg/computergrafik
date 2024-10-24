@@ -21,11 +21,6 @@
 
 struct Settings
 {
-    Settings(bool fullscreen, int width, int height, bool msaa, bool vsync, bool culling, bool depth)
-        : fullscreen(fullscreen), width(width), height(height), msaa(msaa), vsync(vsync), culling(culling), depth(depth)
-    {
-    }
-
     bool fullscreen;
     int width;
     int height;

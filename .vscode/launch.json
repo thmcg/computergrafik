@@ -6,90 +6,110 @@
             "program": "${workspaceFolder}/bin/cgm_01",
             "cwd": "${workspaceFolder}/cgm_01",
             "preLaunchTask": "make cgm_01",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_01.exe",
+            }
         },
         {
             "name": "CGM 02",
             "program": "${workspaceFolder}/bin/cgm_02",
             "cwd": "${workspaceFolder}/cgm_02",
             "preLaunchTask": "make cgm_02",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_02.exe",
+            }
         },
         {
             "name": "CGM 03",
             "program": "${workspaceFolder}/bin/cgm_03",
             "cwd": "${workspaceFolder}/cgm_03",
             "preLaunchTask": "make cgm_03",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_03.exe",
+            }
         },
         {
             "name": "CGM 04",
             "program": "${workspaceFolder}/bin/cgm_04",
             "cwd": "${workspaceFolder}/cgm_04",
             "preLaunchTask": "make cgm_04",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_04.exe",
+            }
         },
         {
             "name": "CGM 05",
             "program": "${workspaceFolder}/bin/cgm_05",
             "cwd": "${workspaceFolder}/cgm_05",
             "preLaunchTask": "make cgm_05",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_05.exe",
+            }
         },
         {
             "name": "CGM 06",
             "program": "${workspaceFolder}/bin/cgm_06",
             "cwd": "${workspaceFolder}/cgm_06",
             "preLaunchTask": "make cgm_06",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_06.exe",
+            }
         },
         {
             "name": "CGM 07",
             "program": "${workspaceFolder}/bin/cgm_07",
             "cwd": "${workspaceFolder}/cgm_07",
             "preLaunchTask": "make cgm_07",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_07.exe",
+            }
         },
         {
             "name": "CGM 08",
             "program": "${workspaceFolder}/bin/cgm_08",
             "cwd": "${workspaceFolder}/cgm_08",
             "preLaunchTask": "make cgm_08",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_08.exe"
+            }
         },
         {
             "name": "CGM 09",
             "program": "${workspaceFolder}/bin/cgm_09",
             "cwd": "${workspaceFolder}/cgm_09",
             "preLaunchTask": "make cgm_09",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_09.exe",
+            }
         },
         {
             "name": "CGM 10",
             "program": "${workspaceFolder}/bin/cgm_10",
             "cwd": "${workspaceFolder}/cgm_10",
             "preLaunchTask": "make cgm_10",
-            "type": "cppdbg",
+            "type": "lldb-dap",
             "request": "launch",
-            "MIMode": "lldb"
+            "windows": {
+                "program": "${workspaceFolder}/bin/cgm_10.exe",
+            }
         }
     ]
 }

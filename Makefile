@@ -56,7 +56,8 @@ clean:
 	@rm -rf obj bin
 
 starter-set:
-	zip computergrafik.zip README.md Makefile LICENSE .gitignore .clang-format cgm_01 cgm_02 cgm_03 libraries/**/* .vscode/launch.json .vscode/tasks.json
+	zip computergrafik.zip README.md Makefile LICENSE .gitignore .clang-format cgm_01 cgm_02 cgm_03 .vscode/launch.json .vscode/tasks.json .vscode/extensions.json
+	zip -r computergrafik.zip libraries
 
 # Automatically generate rules for each subfolder
 .PHONY: all clean $(SRC_DIRS)

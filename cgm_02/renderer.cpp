@@ -19,8 +19,7 @@
 
 #include "renderer.h"
 
-Renderer::Renderer(Settings settings, std::shared_ptr<Window> window)
-    : settings(settings), window(window), viewportWidth(0), viewportHeight(0), resizeViewport(false), viewMatrix(Matrix4::translate(0.0, 0.0, -2.0))
+Renderer::Renderer(const Settings &settings, Window &window)
 {
     glfwSwapInterval(settings.vsync ? 1 : 0);
 
@@ -29,6 +28,14 @@ Renderer::Renderer(Settings settings, std::shared_ptr<Window> window)
     if (settings.depth) glEnable(GL_DEPTH_TEST);
 
     glClearColor(0.29f, 0.36f, 0.4f, 1.0f);
+
+    window.onSizeChanged([this](int width, int height)
+    {
+        std::cout << "Resolution: " << width << "x" << height << std::endl;
+        viewportWidth = width;
+        viewportHeight = height;
+        resizeViewport = true;
+    });
 }
 
 Renderer::~Renderer()
@@ -37,33 +44,28 @@ Renderer::~Renderer()
 
 void Renderer::loop()
 {
-    while (window->loop())
-    {
-        setViewport();
+    setViewport();
 
-        glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glMultMatrixf(viewMatrix.toFloat());
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glMultMatrixf(viewMatrix.toFloat());
 
-        glBegin(GL_QUADS);
-        glColor3f(0.5f, 0.73f, 0.14f);
-        glVertex3f(-0.6f, 0.0f, 0.0f);
-        glVertex3f(0.0f, -0.6f, 0.0f);
-        glVertex3f(0.6f, 0.0f, 0.0f);
-        glVertex3f(0.0f, 0.6f, 0.0f);
-        glEnd();
-    }
+    glBegin(GL_QUADS);
+    glColor3f(0.5f, 0.73f, 0.14f);
+    glVertex3f(-0.6f, 0.0f, 0.0f);
+    glVertex3f(0.0f, -0.6f, 0.0f);
+    glVertex3f(0.6f, 0.0f, 0.0f);
+    glVertex3f(0.0f, 0.6f, 0.0f);
+    glEnd();
 }
 
 void Renderer::setViewport()
 {
-    if (window->resized)
+    if (resizeViewport)
     {
-        window->resized = false;
-        viewportWidth = window->width;
-        viewportHeight = window->height;
+        resizeViewport = false;
         glViewport(0, 0, viewportWidth, viewportHeight);
         double zNear = 0.1;
         double zFar = 100.0;
