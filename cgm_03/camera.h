@@ -19,15 +19,23 @@
 
 #pragma once
 
-struct Settings
+#include "cgmath.h"
+
+class Camera
 {
-    bool fullscreen;
-    int width;
-    int height;
-    bool msaa;
-    bool vsync;
-    bool culling;
-    bool depth;
-    double walkSpeed;
-    double mouseSpeed;
+  public:
+    Camera();
+    ~Camera();
+    void setPosition(Vector3 position);
+    Vector3 getPosition();
+    void setRotation(Vector3 rotation);
+    Vector3 getRotation();
+    const Matrix4 &getViewMatrix();
+
+  private:
+    Vector3 position = Vector3(0.0, 0.0, 0.0);
+    Vector3 rotation = Vector3(0.0, 0.0, 0.0); // in rads
+    Matrix4 viewMatrix = Matrix4::identity();
+    bool changedPosition = false;
+    bool changedRotation = false;
 };

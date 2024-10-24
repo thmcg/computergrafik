@@ -19,15 +19,25 @@
 
 #pragma once
 
-struct Settings
+#include "camera.h"
+#include "cgmath.h"
+#include "settings.h"
+#include "window.h"
+
+#include <iostream>
+#include <vector>
+
+class Simulation
 {
-    bool fullscreen;
-    int width;
-    int height;
-    bool msaa;
-    bool vsync;
-    bool culling;
-    bool depth;
-    double walkSpeed;
-    double mouseSpeed;
+  public:
+    Simulation(const Settings &settings, Window &window);
+    ~Simulation();
+    void loop(const double time);
+    const Matrix4 &getCameraViewMatrix();
+
+  private:
+    Camera camera = {};
+    double cameraYaw = 0.0;
+    double cameraPitch = 0.0;
+    std::array<bool, 384> keyStates = {};
 };

@@ -19,15 +19,28 @@
 
 #pragma once
 
-struct Settings
+#define GLFW_INCLUDE_GLEXT
+
+#include "cgmath.h"
+#include "settings.h"
+#include "window.h"
+
+#include <GLFW/glfw3.h>
+#include <iostream>
+#include <memory>
+
+class Renderer
 {
-    bool fullscreen;
-    int width;
-    int height;
-    bool msaa;
-    bool vsync;
-    bool culling;
-    bool depth;
-    double walkSpeed;
-    double mouseSpeed;
+  public:
+    Renderer(const Settings &settings, Window &window);
+    ~Renderer();
+    void loop();
+    void setViewMatrix(const Matrix4 &viewMatrix);
+
+  private:
+    void setViewport();
+    int viewportWidth = 0;
+    int viewportHeight = 0;
+    bool resizeViewport = false;
+    Matrix4 viewMatrix = {};
 };
