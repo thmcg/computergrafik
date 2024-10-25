@@ -41,5 +41,5 @@ class Renderer
     int viewportWidth = 0;
     int viewportHeight = 0;
     bool resizeViewport = false;
-    Matrix4 viewMatrix = {};
+    Matrix4 viewMatrix = Matrix4::translate(0.0, 0.0, -2.0);
 };
