@@ -21,7 +21,6 @@
 #include "window.h"
 
 #include <iostream>
-#include <memory>
 
 int main()
 {

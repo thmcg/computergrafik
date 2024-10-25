@@ -21,6 +21,8 @@
 
 #include "cgmath.h"
 
+#include <iostream>
+
 Renderer::Renderer(const Settings &settings, Window &window)
 {
     glfwSwapInterval(settings.vsync ? 1 : 0);

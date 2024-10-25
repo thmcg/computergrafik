@@ -17,13 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "camera.h"
 #include "renderer.h"
 #include "simulation.h"
 #include "window.h"
 
 #include <iostream>
-#include <memory>
 
 int main()
 {

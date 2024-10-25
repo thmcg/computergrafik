@@ -19,8 +19,6 @@
 
 #pragma once
 
-#include <cmath>
-
 struct Matrix4
 {
     double m11;  double m21;  double m31;  double m41;

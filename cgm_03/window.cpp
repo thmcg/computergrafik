@@ -19,6 +19,8 @@
 
 #include "window.h"
 
+#include <iostream>
+
 Window::Window(const std::string &title, const Settings &settings)
     : width(settings.width), height(settings.height), fullscreen(settings.fullscreen)
 {

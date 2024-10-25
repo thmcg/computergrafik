@@ -24,8 +24,7 @@
 #include "settings.h"
 #include "window.h"
 
-#include <iostream>
-#include <vector>
+#include <array>
 
 class Simulation
 {
