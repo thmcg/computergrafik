@@ -18,17 +18,24 @@
  */
 
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <string>
 
-class Texture
+#include "cgmath.h"
+
+class Camera
 {
   public:
-    Texture(const std::string &filename);
-    ~Texture();
-    uint32_t getTextureID();
+    Camera();
+    ~Camera();
+    void setPosition(Vector3 position);
+    Vector3 getPosition();
+    void setRotation(Vector3 rotation);
+    Vector3 getRotation();
+    const Matrix4 &getViewMatrix();
 
   private:
-    uint32_t textureID = 0;
+    Vector3 position = Vector3(0.0, 0.0, 0.0);
+    Vector3 rotation = Vector3(0.0, 0.0, 0.0); // in rads
+    Matrix4 viewMatrix = Matrix4::identity();
+    bool changedPosition = false;
+    bool changedRotation = false;
 };

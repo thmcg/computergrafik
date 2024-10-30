@@ -17,18 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <string>
+#include "vertex.h"
 
-class Texture
+Vertex::Vertex(const Vector3 &position, const Vector2 &texCoord)
+    : position{static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z)},
+      texCoord{static_cast<float>(texCoord.x), static_cast<float>(texCoord.y)}
 {
-  public:
-    Texture(const std::string &filename);
-    ~Texture();
-    uint32_t getTextureID();
+}
 
-  private:
-    uint32_t textureID = 0;
-};
+Vertex::~Vertex()
+{
+}

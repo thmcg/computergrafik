@@ -18,17 +18,25 @@
  */
 
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <string>
 
-class Texture
+#include "camera.h"
+#include "cgmath.h"
+#include "settings.h"
+#include "window.h"
+
+#include <array>
+
+class Simulation
 {
   public:
-    Texture(const std::string &filename);
-    ~Texture();
-    uint32_t getTextureID();
+    Simulation(const Settings &settings, Window &window);
+    ~Simulation();
+    void loop(const double time);
+    const Matrix4 &getCameraViewMatrix();
 
   private:
-    uint32_t textureID = 0;
+    Camera camera = {};
+    double cameraYaw = 0.0;
+    double cameraPitch = 0.0;
+    std::array<bool, 384> keyStates = {};
 };
