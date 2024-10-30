@@ -3,7 +3,8 @@
     "Add": [
       "-std=c++20",
       "-Wno-deprecated-declarations",
-      "-Ilibraries/glad/include"
+      "-Ilibraries/glad/include",
+      "-Ilibraries/glfw-3.4.bin.MACOS/include"
     ]
   }
 }
