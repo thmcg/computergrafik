@@ -1,6 +1,6 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
+ * Copyright © 2021-2024 Tobias Reimann
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,8 @@
 */
 
 #version 330 core
-layout (location = 0) in vec3 VertPosIn;
+
+layout (location = 0) in vec3 VertPos;
 
 uniform mat4 WorldMatrix;
 uniform mat4 ViewMatrix;
@@ -26,5 +27,5 @@ uniform mat4 ProjectionMatrix;
 void main()
 {
     mat4 WvpMatrix = ProjectionMatrix * ViewMatrix * WorldMatrix;
-    gl_Position = WvpMatrix * vec4(VertPosIn, 1.0);
+    gl_Position = WvpMatrix * vec4(VertPos, 1.0);
 }
