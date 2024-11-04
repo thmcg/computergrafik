@@ -51,14 +51,14 @@ Vector3 Camera::getRotation()
 
 const Matrix4 &Camera::getViewMatrix()
 {
-    if (!changed)
+    if (changed)
     {
-        return this->viewMatrix;
+        Matrix4 rotation = Matrix4::rotateX(-this->rotation.x) * Matrix4::rotateY(-this->rotation.y) * Matrix4::rotateZ(-this->rotation.z);
+        Matrix4 translation = Matrix4::translate(-this->position.x, -this->position.y, -this->position.z);
+
+        viewMatrix = rotation * translation;
+        changed = false;
     }
 
-    Matrix4 rotation = Matrix4::rotateX(-this->rotation.x) * Matrix4::rotateY(-this->rotation.y) * Matrix4::rotateZ(-this->rotation.z);
-    Matrix4 translation = Matrix4::translate(-this->position.x, -this->position.y, -this->position.z);
-
-    viewMatrix = rotation * translation;
-    return this->viewMatrix;
+    return viewMatrix;
 }
