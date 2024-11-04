@@ -30,7 +30,7 @@ Camera::~Camera()
 void Camera::setPosition(Vector3 position)
 {
     this->position = position;
-    changedPosition = true;
+    changed = true;
 }
 
 Vector3 Camera::getPosition()
@@ -41,7 +41,7 @@ Vector3 Camera::getPosition()
 void Camera::setRotation(Vector3 rotation)
 {
     this->rotation = rotation;
-    changedRotation = true;
+    changed = true;
 }
 
 Vector3 Camera::getRotation()
@@ -51,23 +51,13 @@ Vector3 Camera::getRotation()
 
 const Matrix4 &Camera::getViewMatrix()
 {
-    if (!changedPosition && !changedRotation)
+    if (!changed)
     {
         return this->viewMatrix;
     }
 
-    Matrix4 rotation = Matrix4::identity();
-    Matrix4 translation = Matrix4::identity();
-    if (changedPosition)
-    {
-        rotation = Matrix4::rotateX(-this->rotation.x) * Matrix4::rotateY(-this->rotation.y) * Matrix4::rotateZ(-this->rotation.z);
-        changedPosition = false;
-    }
-    if (changedRotation)
-    {
-        translation = Matrix4::translate(-this->position.x, -this->position.y, -this->position.z);
-        changedRotation = false;
-    }
+    Matrix4 rotation = Matrix4::rotateX(-this->rotation.x) * Matrix4::rotateY(-this->rotation.y) * Matrix4::rotateZ(-this->rotation.z);
+    Matrix4 translation = Matrix4::translate(-this->position.x, -this->position.y, -this->position.z);
 
     viewMatrix = rotation * translation;
     return this->viewMatrix;

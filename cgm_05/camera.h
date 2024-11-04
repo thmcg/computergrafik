@@ -36,6 +36,5 @@ class Camera
     Vector3 position = Vector3(0.0, 0.0, 0.0);
     Vector3 rotation = Vector3(0.0, 0.0, 0.0); // in rads
     Matrix4 viewMatrix = Matrix4::identity();
-    bool changedPosition = false;
-    bool changedRotation = false;
+    bool changed = false;
 };
