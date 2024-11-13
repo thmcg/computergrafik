@@ -23,6 +23,8 @@
 
 #include "stb_image.h"
 
+#include <stdexcept>
+
 Texture::Texture(const std::string &filename)
 {
     glGenTextures(1, &textureID);

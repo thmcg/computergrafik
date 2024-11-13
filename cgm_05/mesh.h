@@ -21,6 +21,7 @@
 
 #include "vertex.h"
 
+#include <cstdint>
 #include <vector>
 
 class Mesh

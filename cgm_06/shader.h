@@ -22,6 +22,7 @@
 #include "cgmath.h"
 #include "texture.h"
 
+#include <cstdint>
 #include <string>
 #include <array>
 

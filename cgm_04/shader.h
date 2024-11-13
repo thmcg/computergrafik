@@ -21,6 +21,7 @@
 
 #include "cgmath.h"
 
+#include <cstdint>
 #include <string>
 
 class Shader

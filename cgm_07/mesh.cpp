@@ -37,7 +37,7 @@ Mesh::Mesh(const std::string &filename)
     std::vector<Vector3> vn;
     std::vector<std::string> f;
 
-    FileReader reader = FileReader(filename);
+    FileReader reader(filename);
     while (reader.hasLine())
     {
         std::string type = reader.getString();

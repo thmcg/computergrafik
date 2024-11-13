@@ -19,6 +19,7 @@
 
 #include "renderer.h"
 
+#include <cmath>
 #include <iostream>
 
 Renderer::Renderer(const Settings &settings, Window &window)
