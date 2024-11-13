@@ -143,7 +143,7 @@ struct Matrix4
         return m;
     }
 
-    static Matrix4 matrixScale(double a)
+    static Matrix4 scale(double a)
     {
         Matrix4 m = {
             a, 0, 0, 0,
