@@ -19,23 +19,22 @@
 
 #pragma once
 
-#include "vertex.h"
+#include "cgmath.h"
 
-#include <cstdint>
-#include <string>
-#include <vector>
-
-class Mesh
+class Camera
 {
   public:
-    Mesh(const std::vector<Vertex> &vertices);
-    Mesh(const std::string &filename);
-    ~Mesh();
-    void draw();
+    Camera();
+    ~Camera();
+    void setPosition(Vector3 position);
+    const Vector3 &getPosition();
+    void setRotation(Vector3 rotation);
+    Vector3 getRotation();
+    const Matrix4 &getViewMatrix();
 
   private:
-    void init();
-    std::vector<Vertex> vertices = {};
-    uint32_t vaoID = 0;
-    uint32_t vboID = 0;
+    Vector3 position = Vector3(0.0, 0.0, 0.0);
+    Vector3 rotation = Vector3(0.0, 0.0, 0.0); // in rads
+    Matrix4 viewMatrix = Matrix4::identity();
+    bool changed = false;
 };

@@ -19,23 +19,25 @@
 
 #pragma once
 
-#include "vertex.h"
+#include "camera.h"
+#include "cgmath.h"
+#include "settings.h"
+#include "window.h"
 
-#include <cstdint>
-#include <string>
-#include <vector>
+#include <array>
 
-class Mesh
+class Simulation
 {
   public:
-    Mesh(const std::vector<Vertex> &vertices);
-    Mesh(const std::string &filename);
-    ~Mesh();
-    void draw();
+    Simulation(const Settings &settings, Window &window);
+    ~Simulation();
+    void loop(const double time);
+    const Vector3 &getCameraPosition();
+    const Matrix4 &getCameraViewMatrix();
 
   private:
-    void init();
-    std::vector<Vertex> vertices = {};
-    uint32_t vaoID = 0;
-    uint32_t vboID = 0;
+    Camera camera = {};
+    double cameraYaw = 0.0;
+    double cameraPitch = 0.0;
+    std::array<bool, 384> keyStates = {};
 };

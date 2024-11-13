@@ -17,25 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #include "vertex.h"
 
-#include <cstdint>
-#include <string>
-#include <vector>
-
-class Mesh
+Vertex::Vertex(const Vector3 &position, const Vector2 &texCoord, const Vector3 &normal)
+    : position{static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z)},
+      texCoord{static_cast<float>(texCoord.x), static_cast<float>(texCoord.y)},
+      normal{static_cast<float>(normal.x), static_cast<float>(normal.y), static_cast<float>(normal.z)}
 {
-  public:
-    Mesh(const std::vector<Vertex> &vertices);
-    Mesh(const std::string &filename);
-    ~Mesh();
-    void draw();
+}
 
-  private:
-    void init();
-    std::vector<Vertex> vertices = {};
-    uint32_t vaoID = 0;
-    uint32_t vboID = 0;
-};
+Vertex::~Vertex()
+{
+}

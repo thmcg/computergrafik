@@ -1,6 +1,6 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
+ * Copyright © 2021-2024 Tobias Reimann
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,13 @@
 */
 
 #version 330 core
+
 out vec4 FragColor;
 
 in vec2 TexCoord;
-in vec3 NormVect;
+in vec3 NormVec;
 in vec3 VertPos;
-in vec3 SunLightObjSpc;
+in vec3 SunDirectionObjSpc;
 in vec3 CameraPosObjSpc;
 
 uniform sampler2D Diffuse;
@@ -30,15 +31,18 @@ uniform sampler2D Diffuse;
 void main()
 {
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
-    vec3 albedo = vec3(texture(Diffuse, TexCoord));
+    vec3 textureColor = vec3(texture(Diffuse, TexCoord));
 
-    float lightIntensity = max(dot(NormVect, -SunLightObjSpc), 0.0);
+    // ambient
+    vec3 ambient = 0.1 * lightColor * textureColor;
 
-    vec3 ambient = 0.1 * lightColor * albedo;
-    vec3 diffuse = 0.9 * lightIntensity * lightColor * albedo;
+    // diffuse
+    float lightIntensity = max(dot(NormVec, -SunDirectionObjSpc), 0.0);
+    vec3 diffuse = 0.9 * lightIntensity * lightColor * textureColor;
 
+    // specular
     vec3 viewDir = normalize(VertPos - CameraPosObjSpc);
-    vec3 reflectDir = reflect(-SunLightObjSpc, NormVect);
+    vec3 reflectDir = reflect(-SunDirectionObjSpc, NormVec);
     vec3 specular = 0.5 * pow(max(dot(viewDir, reflectDir), 0.0), 16) * lightColor;
 
     FragColor = vec4(ambient + diffuse + specular, 1.0);
