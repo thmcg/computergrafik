@@ -1,6 +1,6 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
+ * Copyright © 2021-2024 Tobias Reimann
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,14 @@
 */
 
 #version 330 core
+
 out vec4 FragColor;
 
 in vec2 TexCoord;
 
-uniform sampler2D Diffuse;
+uniform sampler2D thmTexture;
 
 void main()
 {
-    FragColor = texture(Diffuse, TexCoord);
+    FragColor = texture(thmTexture, TexCoord);
 }

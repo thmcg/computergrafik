@@ -18,17 +18,30 @@
  */
 
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <string>
 
-class Texture
+#include "cgmath.h"
+#include "mesh.h"
+#include "settings.h"
+#include "shader.h"
+#include "texture.h"
+#include "window.h"
+
+class Renderer
 {
   public:
-    Texture(const std::string &filename);
-    ~Texture();
-    uint32_t getTextureID();
+    Renderer(const Settings &settings, Window &window);
+    ~Renderer();
+    void loop();
+    void setViewMatrix(const Matrix4 &viewMatrix);
 
   private:
-    uint32_t textureID = 0;
+    void setViewport();
+    int viewportWidth = 0;
+    int viewportHeight = 0;
+    bool resizeViewport = false;
+    Matrix4 viewMatrix = Matrix4::translate(0.0, 0.0, -2.0);
+    Matrix4 projectionMatrix = Matrix4::identity();
+    Mesh *mesh = nullptr;
+    Shader *shader = nullptr;
+    Texture *texture = nullptr;
 };
