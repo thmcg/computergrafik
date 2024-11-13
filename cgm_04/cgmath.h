@@ -44,7 +44,7 @@ struct Vector3
     {
     }
 
-    Vector3 operator+(const Vector3 &b)
+    Vector3 operator+(const Vector3 &b) const
     {
         Vector3 result = {
             x + b.x,
@@ -77,7 +77,7 @@ struct Vector4
         return {x, y, z};
     }
 
-    Vector4 operator+(const Vector4 &b)
+    Vector4 operator+(const Vector4 &b) const
     {
         Vector4 result = {
             x + b.x,
@@ -189,7 +189,7 @@ struct Matrix4
         return m;
     }
 
-    Matrix4 operator*(const Matrix4 &b)
+    Matrix4 operator*(const Matrix4 &b) const
     {
         Matrix4 result = {
             m11 * b.m11 + m21 * b.m12 + m31 * b.m13 + m41 * b.m14,
