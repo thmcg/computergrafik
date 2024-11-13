@@ -17,27 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "vertex.h"
 
-#include "cgmath.h"
-#include "texture.h"
-
-#include <string>
-#include <array>
-
-class Shader
+Vertex::Vertex(const Vector3 &position, const Vector2 &texCoord)
+    : position{static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z)},
+      texCoord{static_cast<float>(texCoord.x), static_cast<float>(texCoord.y)}
 {
-  public:
-    Shader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile);
-    ~Shader();
-    void activate();
-    void setMatrix4(const std::string &uniformName, const Matrix4 &matrix4);
-    void setVector3(const std::string &uniformName, const Vector3 &vector3);
-    void setTexture(const std::string &textureName, const Texture &texture);
+}
 
-  private:
-    uint32_t shaderProgramID = 0;
-    std::array<std::string, 16> textureUnits = {};
-    void compile(const std::string &filename, uint32_t *shader, uint32_t type);
-    std::string readFile(const std::string &filename);
-};
+Vertex::~Vertex()
+{
+}

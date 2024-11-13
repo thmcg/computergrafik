@@ -20,24 +20,29 @@
 #pragma once
 
 #include "cgmath.h"
-#include "texture.h"
+#include "model.h"
+#include "settings.h"
+#include "window.h"
 
-#include <string>
-#include <array>
-
-class Shader
+class Renderer
 {
   public:
-    Shader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile);
-    ~Shader();
-    void activate();
-    void setMatrix4(const std::string &uniformName, const Matrix4 &matrix4);
-    void setVector3(const std::string &uniformName, const Vector3 &vector3);
-    void setTexture(const std::string &textureName, const Texture &texture);
+    Renderer(const Settings &settings, Window &window);
+    ~Renderer();
+    void loop();
+    void setViewMatrix(const Matrix4 &viewMatrix);
 
   private:
-    uint32_t shaderProgramID = 0;
-    std::array<std::string, 16> textureUnits = {};
-    void compile(const std::string &filename, uint32_t *shader, uint32_t type);
-    std::string readFile(const std::string &filename);
+    void setViewport();
+    size_t loadModel(const std::string &filename);
+    void updateModel(size_t modelID, Vector3 position, Vector3 rotation, float scale);
+    void unloadModel(size_t modelID);
+    int viewportWidth = 0;
+    int viewportHeight = 0;
+    bool resizeViewport = false;
+    Matrix4 viewMatrix = Matrix4::translate(0.0, 0.0, -2.0);
+    Matrix4 projectionMatrix = Matrix4::identity();
+    Vector3 sunDirection = Vector3(0.577f,-0.577f,-0.577f);
+    std::unordered_map<size_t, Model> models = {};
+    size_t currentModelID = 0;
 };

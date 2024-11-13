@@ -1,42 +1,45 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
- * 
+ * Copyright © 2021-2024 Tobias Reimann
+ * Copyright © 2024 Lukas Scheurer: Rewritten in modern C++
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 #pragma once
-#include <map>
-#include <string>
 #include "cgmath.h"
 #include "mesh.h"
 #include "shader.h"
 #include "texture.h"
 
+#include <map>
+#include <optional>
+#include <string>
+
 class Model
 {
-    public:
-    Model(std::string filename);
+  public:
+    Model(const std::string &filename);
     ~Model();
-    void setTransform(Vector3, Vector3, float);
-    void render(Matrix projectionMatrix, Matrix viewMatrix, Vector3 sunLight);
-    
-    private:
-    Vector3 position;
-    Vector3 rotation;
-    float scale = 1;
-    Shader *shader;
-    Mesh *mesh;
-    std::map<std::string, Texture*> textures;
+    void transform(const Vector3 &position, const Vector3 &rotation, float scale);
+    void render(const Matrix4 &projectionMatrix, const Matrix4 &viewMatrix, const Vector3 &sunDirection);
+
+  private:
+    Vector3 position = Vector3(0, 0, 0);
+    Vector3 rotation = Vector3(0, 0, 0);
+    double scale = 1.0;
+    std::optional<Shader> shader = {};
+    std::optional<Mesh> mesh = {};
+    std::map<std::string, Texture> textures = {};
 };

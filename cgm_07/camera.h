@@ -20,24 +20,21 @@
 #pragma once
 
 #include "cgmath.h"
-#include "texture.h"
 
-#include <string>
-#include <array>
-
-class Shader
+class Camera
 {
   public:
-    Shader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile);
-    ~Shader();
-    void activate();
-    void setMatrix4(const std::string &uniformName, const Matrix4 &matrix4);
-    void setVector3(const std::string &uniformName, const Vector3 &vector3);
-    void setTexture(const std::string &textureName, const Texture &texture);
+    Camera();
+    ~Camera();
+    void setPosition(Vector3 position);
+    Vector3 getPosition();
+    void setRotation(Vector3 rotation);
+    Vector3 getRotation();
+    const Matrix4 &getViewMatrix();
 
   private:
-    uint32_t shaderProgramID = 0;
-    std::array<std::string, 16> textureUnits = {};
-    void compile(const std::string &filename, uint32_t *shader, uint32_t type);
-    std::string readFile(const std::string &filename);
+    Vector3 position = Vector3(0.0, 0.0, 0.0);
+    Vector3 rotation = Vector3(0.0, 0.0, 0.0); // in rads
+    Matrix4 viewMatrix = Matrix4::identity();
+    bool changed = false;
 };
