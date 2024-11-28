@@ -19,9 +19,6 @@
 
 #include "simulation.h"
 
-static double walkSpeed;
-static double mouseSpeed;
-
 Simulation::Simulation(const Settings &settings, Window &window)
 {
     walkSpeed = settings.walkSpeed;

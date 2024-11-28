@@ -1,5 +1,5 @@
-m meshes/earth.obj
-s shaders/vertex_shader_lit.glsl shaders/fragment_shader_lit_drn.glsl
-t Diffuse textures/land_ocean_ice_8192.jpg
+m meshes/sphere.obj
+s shaders/vertex_shader_lit.glsl shaders/fragment_shader_lit_earth.glsl
+t Diffuse textures/earth_diffuse.jpg
 t Roughness textures/earth_roughness.jpg
 t NormalMap textures/earth_normal.jpg

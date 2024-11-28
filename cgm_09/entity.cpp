@@ -1,36 +1,32 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
- * 
+ * Copyright © 2021-2024 Tobias Reimann
+ * Copyright © 2024 Lukas Scheurer: Rewritten in modern C++
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 #include "entity.h"
-
-int graphicsLoadModel(std::string filename);
-void graphicsUpdateModel(int id, Vector3 position, Vector3 rotation, float scale);
-void graphicsUpdateModel(int id, std::string flag);
-void graphicsUnloadModel(int id);
 
 Entity::Entity(std::string name)
 {
     this->name = name;
 }
 
-void Entity::setModel(std::string model)
+void Entity::setModelId(uint32_t modelId)
 {
-    this->model = model;
+    this->modelId = modelId;
 }
 
 void Entity::setPosition(Vector3 position)
@@ -48,26 +44,36 @@ void Entity::setScale(float scale)
     this->scale = scale;
 }
 
-void Entity::addFlag(std::string flag)
+void Entity::update(double time, UpdateModelCallback updateModel)
 {
-    this->flags.push_back(flag);
-}
+    // Perform physics updates here
 
-void Entity::load()
-{
-    this->modelId = graphicsLoadModel(this->model);
-    for (int i = 0; i < this->flags.size(); i++)
+    if (updateModel.has_value())
     {
-        graphicsUpdateModel(this->modelId, this->flags[i]);
+        updateModel.value()(modelId, position, rotation, scale);
     }
 }
 
-void Entity::update(double time)
+uint32_t Entity::getModelId() const
 {
-    graphicsUpdateModel(this->modelId, position, rotation, scale);
+    return modelId;
+}
+
+Vector3 Entity::getPosition() const
+{
+    return position;
+}
+
+Vector3 Entity::getRotation() const
+{
+    return rotation;
+}
+
+double Entity::getScale() const
+{
+    return scale;
 }
 
 Entity::~Entity()
 {
-    graphicsUnloadModel(this->modelId);
 }

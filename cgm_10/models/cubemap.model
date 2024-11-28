@@ -1,3 +1,0 @@
-m meshes/cubemap.obj
-s shaders/vertex_shader.glsl shaders/fragment_shader.glsl
-t Diffuse textures/cubemap8k.jpg

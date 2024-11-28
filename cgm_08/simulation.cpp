@@ -19,9 +19,6 @@
 
 #include "simulation.h"
 
-static double walkSpeed;
-static double mouseSpeed;
-
 Simulation::Simulation(const Settings &settings, Window &window)
 {
     walkSpeed = settings.walkSpeed;
@@ -73,13 +70,6 @@ const Vector3 &Simulation::getCameraPosition()
     return camera.getPosition();
 }
 
-/*
-    Simulation::getCamera() is returning the wanted camera through this function,
-    as the idea of our API for the Simulation component is to provide the currently
-    wanted camera for rendering in the format our engine uses. Internally, it
-    can manage it's own camera system with one or more cameras and a completely
-    different format, if needed.
-*/
 const Matrix4 &Simulation::getCameraViewMatrix()
 {
     return camera.getViewMatrix();

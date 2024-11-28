@@ -38,5 +38,7 @@ class Simulation
     Camera camera = {};
     double cameraYaw = 0.0;
     double cameraPitch = 0.0;
+    double walkSpeed = 0.0;
+    double mouseSpeed = 0.0;
     std::array<bool, 384> keyStates = {};
 };

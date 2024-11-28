@@ -1,2 +1,0 @@
-m meshes/earth.obj
-s shaders/vertex_shader_lit.glsl shaders/fragment_shader_lit_athmosphere.glsl

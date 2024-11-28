@@ -1,74 +1,88 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
- * 
+ * Copyright © 2021-2024 Tobias Reimann
+ * Copyright © 2024 Lukas Scheurer: Rewritten in modern C++
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 #include "scene.h"
+
+#include "entity.h"
 #include "filereader.h"
 
-Scene::Scene(std::string filename)
+#include <iostream>
+
+Scene::Scene(const std::string &filename, LoadModelCallback loadModelCallback)
 {
-    FileReader reader = FileReader(filename);
+    FileReader reader(filename);
     while (reader.hasLine())
     {
         std::string type = reader.getString();
         if (type == "e")
         {
-            entities.push_back(new Entity(reader.getString()));
+            entities.emplace_back(reader.getString());
         }
         else if (type == "m")
         {
-            entities[entities.size() - 1]->setModel(reader.getString());
+            std::string modelFile = reader.getString();
+            std::string flag = reader.getString();
+            if (loadModelCallback.has_value())
+            {
+                entities[entities.size() - 1].setModelId(loadModelCallback.value()(modelFile, flag == "fixed"));
+            }
         }
         else if (type == "p")
         {
-            entities[entities.size() - 1]->setPosition(reader.getVector3());
+            entities[entities.size() - 1].setPosition(reader.getVector3());
         }
         else if (type == "r")
         {
-            entities[entities.size() - 1]->setRotation(deg2rad(reader.getVector3()));
+            Vector3 rotation = reader.getVector3();
+            rotation.x = deg2rad(rotation.x);
+            rotation.y = deg2rad(rotation.y);
+            rotation.z = deg2rad(rotation.z);
+            entities[entities.size() - 1].setRotation(rotation);
         }
         else if (type == "s")
         {
-            entities[entities.size() - 1]->setScale(reader.getFloat());
+            entities[entities.size() - 1].setScale(reader.getFloat());
         }
-        else if (type == "f")
-        {
-            entities[entities.size() - 1]->addFlag(reader.getString());
-        }
-    }
-    for (int i = 0; i < entities.size(); i++)
-    {
-        entities[i]->load();
     }
 }
 
 Scene::~Scene()
 {
-    for (int i = 0; i < entities.size(); i++)
-    {
-        delete entities[i];
-    }
+    std::cout << "Scene destructor" << std::endl;
     entities.clear();
 }
 
-void Scene::update(double time)
+void Scene::update(double time, UpdateModelCallback updateModel)
 {
-    for (int i = 0; i < entities.size(); i++)
+    for (auto &entity : entities)
     {
-        entities[i]->update(time);
+        entity.update(time, updateModel);
+    }
+}
+
+void Scene::unload(UnloadModelCallback unloadModel)
+{
+    if (unloadModel.has_value())
+    {
+        for (auto &entity : entities)
+        {
+            unloadModel.value()(entity.getModelId());
+        }
     }
 }

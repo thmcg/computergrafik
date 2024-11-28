@@ -1,16 +1,12 @@
 e Sky
-m models/cubemap.model
+m models/skybox.model fixed
 p 0.0 0.0 0.0
 r 0.0 0.0 0.0
-f fixed
-f nodepth
 
 e Earth
-m models/earth.model
+m models/earth.model fixed
 p 0.0 1.0 -2.0
 r 0.0 0.0 0.0
-f fixed
-f nodepth
 
 e THM
 m models/thm.model

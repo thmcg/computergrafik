@@ -24,6 +24,9 @@
 #include "settings.h"
 #include "window.h"
 
+#include <map>
+#include <string>
+
 class Renderer
 {
   public:
@@ -42,7 +45,7 @@ class Renderer
     bool resizeViewport = false;
     Matrix4 viewMatrix = Matrix4::translate(0.0, 0.0, -2.0);
     Matrix4 projectionMatrix = Matrix4::identity();
-    Vector3 sunDirection = Vector3(0.577f,-0.577f,-0.577f);
-    std::unordered_map<size_t, Model> models = {};
+    Vector3 sunDirection = Vector3(1.0, 1.0, 2.0);
+    std::map<size_t, Model> models = {};
     size_t currentModelID = 0;
 };

@@ -1,98 +1,99 @@
 /**
  * Computergrafik
- * Copyright (C) 2023 Tobias Reimann
- * 
+ * Copyright © 2021-2024 Tobias Reimann
+ * Copyright © 2024 Lukas Scheurer: Rewritten in modern C++
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 #include "model.h"
+
 #include "filereader.h"
 
-Model::Model(std::string filename)
+Model::Model(const std::string &filename, bool fixed)
+    : fixed(fixed)
 {
-    FileReader reader = FileReader(filename);
+    FileReader reader(filename);
     while (reader.hasLine())
     {
         std::string type = reader.getString();
         if (type == "m")
         {
-            //mesh
-            std::string m = reader.getString();
-            this->mesh = new Mesh(m);
+            // mesh
+            std::string meshName = reader.getString();
+            mesh.emplace(meshName);
         }
         else if (type == "s")
         {
-            //shader
-            std::string vs = reader.getString();
-            std::string fs = reader.getString();
-            this->shader = new Shader(vs, fs);
+            // shader
+            std::string vertexShaderName = reader.getString();
+            std::string fragmentShaderName = reader.getString();
+            shader.emplace(vertexShaderName, fragmentShaderName);
         }
         else if (type == "t")
         {
-            //textures
-            std::string slot = reader.getString();
-            Texture *tex = new Texture(reader.getString().c_str());
-            this->textures.insert(std::pair<std::string,Texture*>(slot, tex));
+            // texture
+            std::string uniformName = reader.getString();
+            std::string textureName = reader.getString();
+            textures.emplace(uniformName, textureName);
         }
     }
 }
 
-void Model::render(Matrix projectionMatrix, Matrix viewMatrix, Vector3 sunLight, Vector3 cameraPosition)
+Model::~Model()
 {
-    Vector3 pos = position;
-    if (this->fixed)
-    {
-        pos = position + cameraPosition;
-    }
-
-    shader->activate();
-    shader->setMatrix("ProjectionMatrix", projectionMatrix);
-    shader->setMatrix("ViewMatrix", viewMatrix);
-    shader->setMatrix("WorldMatrix", matrixTranslate(pos.x, pos.y, pos.z) * matrixRotateXYZ(rotation.x, rotation.y, rotation.z) * matrixScale(scale));
-    shader->setVector3("SunLight", sunLight);
-    shader->setVector3("CameraPos", cameraPosition);
-    for (const auto& [key, texture] : textures)
-    {
-        shader->setTexture(key, texture);
-    }
-    mesh->draw();
+    mesh.reset();
+    shader.reset();
+    textures.clear();
 }
 
-bool Model::skipDepthTesting()
-{
-    return nodepth;
-}
-
-void Model::toggleFlag(std::string flag)
-{
-    if (flag == "fixed") this->fixed = !this->fixed;
-    if (flag == "nodepth") this->nodepth = !this->nodepth;
-}
-
-void Model::setTransform(Vector3 position, Vector3 rotation, float scale)
+void Model::transform(const Vector3 &position, const Vector3 &rotation, double scale)
 {
     this->position = position;
     this->rotation = rotation;
     this->scale = scale;
 }
 
-Model::~Model()
+void Model::render(const Matrix4 &projectionMatrix, const Matrix4 &viewMatrix, const Vector3 &sunDirection, const Vector3 &cameraPosition)
 {
-    delete mesh;
-    delete shader;
-    for (const auto& [key, texture] : textures)
+    Vector3 pos = position;
+    if (fixed)
     {
-        delete texture;
+        pos.x += cameraPosition.x;
+        pos.y += cameraPosition.y;
+        pos.z += cameraPosition.z;
+        glDepthMask(GL_FALSE);
+        glDepthFunc(GL_ALWAYS);
+    }
+    Matrix4 worldMatrix = Matrix4::translate(pos.x, pos.y, pos.z) * Matrix4::rotate(rotation.x, rotation.y, rotation.z) * Matrix4::scale(scale);
+
+    shader->activate();
+    shader->setMatrix4("ProjectionMatrix", projectionMatrix);
+    shader->setMatrix4("ViewMatrix", viewMatrix);
+    shader->setMatrix4("WorldMatrix", worldMatrix);
+    shader->setVector3("SunDirection", sunDirection);
+    shader->setVector3("CameraPos", cameraPosition);
+    for (const auto &[uniformName, texture] : textures)
+    {
+        shader->setTexture(uniformName, texture);
+    }
+
+    mesh->draw();
+
+    if (fixed)
+    {
+        glDepthMask(GL_TRUE);
+        glDepthFunc(GL_LESS);
     }
 }

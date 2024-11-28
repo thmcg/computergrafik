@@ -24,6 +24,9 @@
 #include "settings.h"
 #include "window.h"
 
+#include <map>
+#include <string>
+
 class Renderer
 {
   public:
@@ -32,19 +35,19 @@ class Renderer
     void loop();
     void setViewMatrix(const Matrix4 &viewMatrix);
     void setCameraPosition(const Vector3 &cameraPosition);
-
-  private:
-    void setViewport();
     size_t loadModel(const std::string &filename);
     void updateModel(size_t modelID, Vector3 position, Vector3 rotation, float scale);
     void unloadModel(size_t modelID);
+
+  private:
+    void setViewport();
     int viewportWidth = 0;
     int viewportHeight = 0;
     bool resizeViewport = false;
     Matrix4 viewMatrix = Matrix4::translate(0.0, 0.0, -2.0);
     Matrix4 projectionMatrix = Matrix4::identity();
-    Vector3 sunDirection = Vector3(0.577f,-0.577f,-0.577f);
+    Vector3 sunDirection = Vector3(1.0, 1.0, 2.0);
     Vector3 cameraPosition = Vector3(0.0, 0.0, 0.0);
-    std::unordered_map<size_t, Model> models = {};
-    size_t currentModelID = 0;
+    std::map<size_t, Model> models = {};
+    size_t currentModelId = 0;
 };

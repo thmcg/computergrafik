@@ -1,33 +1,18 @@
-e Stars
-m models/cubemap.model
+e Sky
+m models/skybox.model fixed
 p 0.0 0.0 0.0
 r 0.0 0.0 0.0
-f fixed
-f nodepth
-l earthRotation
+
+e Sun
+m models/sun.model fixed
+p 1.0 1.0 2.0
+r 0.0 0.0 0.0
+s 0.03
 
 e Earth
-m models/earth.model
-p 1.0 0.2 -1.0
-r 0.0 180.0 0.0
-f fixed
-f nodepth
-l earthRotation
-
-e Clouds
-m models/clouds.model
-p 1.0 0.2 -1.0
-r 0.0 180.0 0.0
-f fixed
-f nodepth
-l earthRotation
-
-e Athmosphere
-m models/athmosphere.model
-p 1.0 0.2 -1.0
-r 0.0 180.0 0.0
-f fixed
-f nodepth
+m models/earth.model fixed
+p 2.0 0.0 -3.0
+r 0.0 0.0 0.0
 l earthRotation
 
 e THM

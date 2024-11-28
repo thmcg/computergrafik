@@ -39,7 +39,7 @@ void main()
     gl_Position = WvpMatrix * vec4(VertPosIn, 1.0);
     TexCoord = TexCoordIn;
     NormVec = NormVecIn;
-    SunDirectionObjSpc = normalize(vec3(inverse(WorldMatrix) * vec4(SunDirection, 0.0)));
+    SunDirectionObjSpc = normalize(vec3(inverse(WorldMatrix) * vec4(normalize(SunDirection), 0.0)));
     CameraPosObjSpc = vec3(inverse(WorldMatrix) * vec4(CameraPos, 1.0));
     VertPos = VertPosIn;
 }

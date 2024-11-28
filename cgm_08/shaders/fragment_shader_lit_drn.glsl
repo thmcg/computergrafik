@@ -41,12 +41,12 @@ void main()
     vec3 ambient = 0.1 * lightColor * textureColor;
 
     // diffuse
-    float lightIntensity = max(dot(normal, -SunDirectionObjSpc), 0.0);
+    float lightIntensity = max(dot(normal, SunDirectionObjSpc), 0.0);
     vec3 diffuse = 0.9 * lightIntensity * lightColor * textureColor;
 
     // specular
     vec3 viewDir = normalize(VertPos - CameraPosObjSpc);
-    vec3 reflectDir = reflect(-SunDirectionObjSpc, normal);
+    vec3 reflectDir = reflect(SunDirectionObjSpc, normal);
     vec3 specular = 0.5 * pow(max(dot(viewDir, reflectDir), 0.0), 16) * lightColor * (1.0 - roughness);
 
     FragColor = vec4(ambient + diffuse + specular, 1.0);
