@@ -32,7 +32,7 @@ class Model
   public:
     Model(const std::string &filename);
     ~Model();
-    void transform(const Vector3 &position, const Vector3 &rotation, float scale);
+    void transform(const Vector3 &position, const Vector3 &rotation, double scale);
     void render(const Matrix4 &projectionMatrix, const Matrix4 &viewMatrix, const Vector3 &sunDirection);
 
   private:

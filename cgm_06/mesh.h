@@ -28,7 +28,6 @@
 class Mesh
 {
   public:
-    Mesh();
     Mesh(const std::vector<Vertex> &vertices);
     Mesh(const std::string &filename);
     ~Mesh();

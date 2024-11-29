@@ -57,7 +57,7 @@ Model::~Model()
     textures.clear();
 }
 
-void Model::transform(const Vector3 &position, const Vector3 &rotation, float scale)
+void Model::transform(const Vector3 &position, const Vector3 &rotation, double scale)
 {
     this->position = position;
     this->rotation = rotation;

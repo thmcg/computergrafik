@@ -65,13 +65,6 @@ void Simulation::loop(const double time)
     camera.setRotation(Vector3(-cameraPitch, -cameraYaw, 0.0));
 }
 
-/*
-    Simulation::getCamera() is returning the wanted camera through this function,
-    as the idea of our API for the Simulation component is to provide the currently
-    wanted camera for rendering in the format our engine uses. Internally, it
-    can manage it's own camera system with one or more cameras and a completely
-    different format, if needed.
-*/
 const Matrix4 &Simulation::getCameraViewMatrix()
 {
     return camera.getViewMatrix();

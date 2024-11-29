@@ -21,6 +21,8 @@
 
 #include "filereader.h"
 
+#include <glad/glad.h>
+
 Model::Model(const std::string &filename, bool fixed)
     : fixed(fixed)
 {

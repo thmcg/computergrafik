@@ -91,20 +91,20 @@ void Renderer::setViewMatrix(const Matrix4 &viewMatrix)
 
 size_t Renderer::loadModel(const std::string &filename)
 {
-    size_t modelID = ++currentModelID;
-    models.emplace(modelID, filename);
-    return modelID;
+    size_t modelId = ++currentModelId;
+    models.emplace(modelId, filename);
+    return modelId;
 }
 
-void Renderer::updateModel(size_t modelID, Vector3 position, Vector3 rotation, float scale)
+void Renderer::updateModel(size_t modelId, const Vector3 &position, const Vector3 &rotation, double scale)
 {
-    if (auto it = models.find(modelID); it != models.end())
+    if (auto it = models.find(modelId); it != models.end())
     {
         it->second.transform(position, rotation, scale);
     }
 }
 
-void Renderer::unloadModel(size_t modelID)
+void Renderer::unloadModel(size_t modelId)
 {
-    models.erase(modelID);
+    models.erase(modelId);
 }

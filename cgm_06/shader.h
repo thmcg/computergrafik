@@ -29,7 +29,6 @@
 class Shader
 {
   public:
-    Shader();
     Shader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile);
     ~Shader();
     void activate();

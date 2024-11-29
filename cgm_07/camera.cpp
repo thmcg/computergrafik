@@ -33,7 +33,7 @@ void Camera::setPosition(Vector3 position)
     changed = true;
 }
 
-Vector3 Camera::getPosition()
+const Vector3 &Camera::getPosition()
 {
     return this->position;
 }

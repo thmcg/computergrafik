@@ -23,6 +23,7 @@
 
 #include "stb_image.h"
 
+#include <glad/glad.h>
 #include <stdexcept>
 
 Texture::Texture(const std::string &filename)

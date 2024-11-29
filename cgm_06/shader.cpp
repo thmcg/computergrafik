@@ -22,10 +22,6 @@
 #include <fstream>
 #include <glad/glad.h>
 
-Shader::Shader()
-{
-}
-
 Shader::Shader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile)
 {
     int success = 0;
@@ -84,7 +80,7 @@ void Shader::setVector3(const std::string &uniformName, const Vector3 &vector3)
     glUniform3fv(uniformLocation, 1, values);
 }
 
-void Shader::setTexture(const std::string &uniformName, Texture* texture)
+void Shader::setTexture(const std::string &uniformName, Texture *texture)
 {
     GLint uniformLocation = glGetUniformLocation(shaderProgramID, uniformName.c_str());
     if (uniformLocation >= 0)

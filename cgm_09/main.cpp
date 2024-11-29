@@ -67,9 +67,9 @@ int main()
             renderer.loop();
         }
 
-        simulation.unloadScene(sceneId, [&renderer](size_t modelID)
+        simulation.unloadScene(sceneId, [&renderer](size_t modelId)
         {
-            renderer.unloadModel(modelID);
+            renderer.unloadModel(modelId);
         });
     }
     catch (const std::exception &e)

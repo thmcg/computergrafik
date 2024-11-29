@@ -151,7 +151,7 @@ struct Matrix4
         return m;
     }
 
-    static Matrix4 rotate(float x, float y, float z)
+    static Matrix4 rotate(double x, double y, double z)
     {
         return rotateX(x) * rotateY(y) * rotateZ(z);
     }

@@ -23,6 +23,7 @@
 
 #include "stb_image.h"
 
+#include <glad/glad.h>
 #include <stdexcept>
 
 Texture::Texture(const std::string &filename)
@@ -61,7 +62,7 @@ Texture::~Texture()
     glDeleteTextures(1, &textureID);
 }
 
-uint32_t Texture::getTextureID()
+uint32_t Texture::getTextureID() const
 {
     return textureID;
 }

@@ -24,10 +24,6 @@
 
 #include <glad/glad.h>
 
-Mesh::Mesh()
-{
-}
-
 Mesh::Mesh(const std::vector<Vertex> &vertices)
     : vertices(vertices)
 {
@@ -65,7 +61,7 @@ Mesh::Mesh(const std::string &filename)
             }
         }
     }
-    
+
     vertices.reserve(v.size());
     for (int i = 0; i < f.size(); i++)
     {

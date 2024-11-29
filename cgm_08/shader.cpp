@@ -60,7 +60,7 @@ void Shader::activate()
 void Shader::setMatrix4(const std::string &uniformName, const Matrix4 &matrix4)
 {
     GLint uniformLocation = glGetUniformLocation(shaderProgramID, uniformName.c_str());
-    
+
     float values[16] = {
         static_cast<float>(matrix4.m11), static_cast<float>(matrix4.m12), static_cast<float>(matrix4.m13), static_cast<float>(matrix4.m14),
         static_cast<float>(matrix4.m21), static_cast<float>(matrix4.m22), static_cast<float>(matrix4.m23), static_cast<float>(matrix4.m24),
@@ -74,7 +74,7 @@ void Shader::setMatrix4(const std::string &uniformName, const Matrix4 &matrix4)
 void Shader::setVector3(const std::string &uniformName, const Vector3 &vector3)
 {
     GLint uniformLocation = glGetUniformLocation(shaderProgramID, uniformName.c_str());
-    
+
     float values[3] = {static_cast<float>(vector3.x), static_cast<float>(vector3.y), static_cast<float>(vector3.z)};
 
     glUniform3fv(uniformLocation, 1, values);

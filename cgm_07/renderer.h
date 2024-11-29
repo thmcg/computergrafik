@@ -38,8 +38,8 @@ class Renderer
   private:
     void setViewport();
     size_t loadModel(const std::string &filename);
-    void updateModel(size_t modelID, Vector3 position, Vector3 rotation, float scale);
-    void unloadModel(size_t modelID);
+    void updateModel(size_t modelId, const Vector3 &position, const Vector3 &rotation, double scale);
+    void unloadModel(size_t modelId);
     int viewportWidth = 0;
     int viewportHeight = 0;
     bool resizeViewport = false;
@@ -47,5 +47,5 @@ class Renderer
     Matrix4 projectionMatrix = Matrix4::identity();
     Vector3 sunDirection = Vector3(1.0, 1.0, 2.0);
     std::map<size_t, Model> models = {};
-    size_t currentModelID = 0;
+    size_t currentModelId = 0;
 };

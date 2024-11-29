@@ -36,8 +36,8 @@ class Renderer
     void setViewMatrix(const Matrix4 &viewMatrix);
     void setCameraPosition(const Vector3 &cameraPosition);
     size_t loadModel(const std::string &filename);
-    void updateModel(size_t modelID, Vector3 position, Vector3 rotation, float scale);
-    void unloadModel(size_t modelID);
+    void updateModel(size_t modelId, const Vector3 &position, const Vector3 &rotation, double scale);
+    void unloadModel(size_t modelId);
 
   private:
     void setViewport();
