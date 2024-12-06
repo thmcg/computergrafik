@@ -34,12 +34,12 @@ class Renderer
     ~Renderer();
     void loop();
     void setViewMatrix(const Matrix4 &viewMatrix);
-
-  private:
-    void setViewport();
     size_t loadModel(const std::string &filename);
     void updateModel(size_t modelId, const Vector3 &position, const Vector3 &rotation, double scale);
     void unloadModel(size_t modelId);
+
+  private:
+    void setViewport();
     int viewportWidth = 0;
     int viewportHeight = 0;
     bool resizeViewport = false;
