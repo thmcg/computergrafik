@@ -26,7 +26,7 @@ class Texture
   public:
     Texture(const std::string &filename);
     ~Texture();
-    uint32_t getTextureID();
+    uint32_t getTextureID() const;
 
   private:
     uint32_t textureID = 0;
