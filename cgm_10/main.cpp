@@ -39,7 +39,8 @@ int main()
             .culling = true,
             .depth = true,
             .walkSpeed = 2.0,
-            .mouseSpeed = 1.0};
+            .mouseSpeed = 1.0
+        };
 
         Window window("Computergrafik", settings);
         Renderer renderer(settings, window);

@@ -36,8 +36,6 @@ Renderer::Renderer(const Settings &settings, Window &window)
     if (settings.depth) glEnable(GL_DEPTH_TEST);
 
     glClearColor(0.19f, 0.26f, 0.3f, 1.0f);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     window.onSizeChanged([this](int width, int height)
     {
@@ -96,7 +94,8 @@ size_t Renderer::loadModel(const std::string &filename, bool fixed)
     models.emplace(
         std::piecewise_construct,
         std::forward_as_tuple(modelId),
-        std::forward_as_tuple(filename, fixed));
+        std::forward_as_tuple(filename, fixed)
+    );
     return modelId;
 }
 

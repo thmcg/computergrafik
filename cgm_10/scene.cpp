@@ -19,7 +19,6 @@
 
 #include "scene.h"
 
-#include "cgmath.h"
 #include "entity.h"
 #include "filereader.h"
 
