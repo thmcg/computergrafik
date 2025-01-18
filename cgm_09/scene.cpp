@@ -80,9 +80,10 @@ void Scene::unload(UnloadModelCallback unloadModel)
 {
     if (unloadModel.has_value())
     {
+        auto unloadModelCallback = unloadModel.value();
         for (auto &entity : entities)
         {
-            unloadModel.value()(entity.getModelId());
+            unloadModelCallback(entity.getModelId());
         }
     }
 }
