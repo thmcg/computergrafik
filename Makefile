@@ -1,23 +1,36 @@
-UNAME = $(shell uname -s)
-ifeq ($(findstring NT,$(UNAME)),NT)
-    # Windows
+# Operating system detection if not defined by user
+ifeq ($(origin System), undefined)
+  UNAME := $(shell uname -s)
+  ifneq (,$(findstring NT,$(UNAME)))
+    System := Windows
+  else ifneq (,$(findstring Darwin,$(UNAME)))
+    System := Mac
+  else ifneq (,$(findstring Linux,$(UNAME)))
+    System := Linux
+  endif
+endif
+
+# Compiler and linker settings based on operating system
+ifeq ($(System), Windows)
 	CXX = clang++
-	INC = -I libraries/glad/include
-	LNK = -l stdc++ -l glfw3 -l gdi32 -l opengl32
+	INC = -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
+	LIB = -L libraries/glfw-3.4/bin/win-lib-mingw-w64
+	LNK = -stdlib=libc++ -static-libstdc++ -l glfw3 -l gdi32 -l opengl32
 	OPT = -std=c++20
-else ifeq ($(findstring Darwin,$(UNAME)),Darwin)
-	# macOS
+
+else ifeq ($(System), Mac)
 	CXX = clang++
-	INC = -I libraries/glfw-3.4.bin.MACOS/include -I libraries/glad/include
-	LIB = -L libraries/glfw-3.4.bin.MACOS/lib-universal
+	INC = -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
+	LIB = -L libraries/glfw-3.4/bin/mac-lib-universal
 	LNK = -l glfw3 -framework Cocoa -framework OpenGL -framework IOKit
 	OPT = -std=c++20 -arch arm64 -arch x86_64 -Wno-deprecated-declarations
-else ifeq ($(findstring Linux,$(UNAME)),Linux)
-	# Linux
+
+else ifeq ($(System), Linux)
 	CXX = clang++
-	INC = -I libraries/glad/include
-	LNK = -lglfw -lrt -lm -ldl -lGL
+	INC = -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
+	LNK = -l glfw -l rt -l m -l dl -l GL
 	OPT = -std=c++20
+
 endif
 
 # Detect subfolders for each chapter
@@ -50,7 +63,7 @@ bin/%:
 obj/%.o: %.cpp
 	@echo Compiling $< ➔ $@ ...
 	@mkdir -p $(dir $@)
-	@$(CXX) -c $< -g -o $@ $(INC) $(OPT)
+	@$(CXX) -MMD -MP -MF $(patsubst %.o,%.d,$@) -c $< -g -o $@ $(INC) $(OPT)
 
 # Rule to build all chapters
 all: $(SRC_DIRS)
@@ -66,3 +79,5 @@ starter-set:
 
 # Automatically generate rules for each subfolder
 .PHONY: all clean $(SRC_DIRS)
+
+-include $(DEP_ALL)

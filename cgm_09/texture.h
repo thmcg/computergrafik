@@ -1,6 +1,6 @@
 /**
  * Computergrafik
- * Copyright © 2021-2024 Tobias Reimann
+ * Copyright © 2021-2025 Tobias Reimann
  * Copyright © 2024 Lukas Scheurer: Rewritten in modern C++
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <string>
 
 class Texture
