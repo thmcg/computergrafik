@@ -12,29 +12,29 @@ endif
 
 # Compiler and linker settings based on operating system
 ifeq ($(System), Windows)
-	CXX = clang++
-	INC = -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
-	LIB = -L libraries/glfw-3.4/bin/win-lib-mingw-w64
-	LNK = -stdlib=libc++ -static-libstdc++ -l glfw3 -l gdi32 -l opengl32
-	OPT = -std=c++20
+	CXX := clang++
+	INC := -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
+	LIB := -L libraries/glfw-3.4/bin/win-lib-mingw-w64
+	LNK := -stdlib=libc++ -static-libstdc++ -l glfw3 -l gdi32 -l opengl32
+	OPT := -std=c++20
 
 else ifeq ($(System), Mac)
-	CXX = clang++
-	INC = -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
-	LIB = -L libraries/glfw-3.4/bin/mac-lib-universal
-	LNK = -l glfw3 -framework Cocoa -framework OpenGL -framework IOKit
-	OPT = -std=c++20 -arch arm64 -arch x86_64 -Wno-deprecated-declarations
+	CXX := clang++
+	INC := -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
+	LIB := -L libraries/glfw-3.4/bin/mac-lib-universal
+	LNK := -l glfw3 -framework Cocoa -framework OpenGL -framework IOKit
+	OPT := -std=c++20 -arch arm64 -arch x86_64 -Wno-deprecated-declarations
 
 else ifeq ($(System), Linux)
-	CXX = clang++
-	INC = -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
-	LNK = -l glfw -l rt -l m -l dl -l GL
-	OPT = -std=c++20
+	CXX := clang++
+	INC := -I libraries/glfw-3.4/include -I libraries/stb -I libraries/glad/include
+	LNK := -l glfw -l rt -l m -l dl -l GL
+	OPT := -std=c++20
 
 endif
 
 # Detect subfolders for each chapter
-SRC_DIRS = $(wildcard cgm_*)
+SRC_DIRS := $(wildcard cgm_*)
 
 # Define list of source files per chapter
 $(foreach dir,$(SRC_DIRS),$(eval SRC_$(dir) := $(wildcard $(dir)/*.cpp)))

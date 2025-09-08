@@ -21,7 +21,7 @@ Die einzelnen Tasks zum bauen der Kapitel und auch zum Aufräumen sind über das
 ```
 $ make cgm_01
 
-$ bin/cgm_01
+$ make run_cgm_01
 
 $ make clean
 ```
