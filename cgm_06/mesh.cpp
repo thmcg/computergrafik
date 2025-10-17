@@ -22,6 +22,7 @@
 #include "cgmath.h"
 #include "filereader.h"
 
+#include <cstddef>
 #include <glad/glad.h>
 
 Mesh::Mesh(const std::vector<Vertex> &vertices)
