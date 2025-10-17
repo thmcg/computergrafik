@@ -19,6 +19,7 @@
 
 #include "mesh.h"
 
+#include <cstddef>
 #include <glad/glad.h>
 
 Mesh::Mesh()
