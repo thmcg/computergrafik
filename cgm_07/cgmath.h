@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <cmath>
 #include <numbers>
 
 inline double deg2rad(double deg)
