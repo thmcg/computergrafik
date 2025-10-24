@@ -22,7 +22,7 @@
 #include <iostream>
 
 Window::Window(const std::string &title, const Settings &settings)
-    : width(settings.width), height(settings.height), fullscreen(settings.fullscreen)
+    : windowSize(settings.width, settings.height), fullscreen(settings.fullscreen)
 {
     glfwSetErrorCallback([](int error, const char *description)
     {
@@ -39,11 +39,13 @@ Window::Window(const std::string &title, const Settings &settings)
     {
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
         const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+        windowPos.x = (mode->width - windowSize.width) / 2;
+        windowPos.y = (mode->height - windowSize.height) / 2;
         window = glfwCreateWindow(mode->width, mode->height, title.c_str(), monitor, nullptr);
     }
     else
     {
-        window = glfwCreateWindow(settings.width, settings.height, title.c_str(), nullptr, nullptr);
+        window = glfwCreateWindow(windowSize.width, windowSize.height, title.c_str(), nullptr, nullptr);
     }
 
     if (!window)
@@ -55,13 +57,13 @@ Window::Window(const std::string &title, const Settings &settings)
     glfwMakeContextCurrent(window);
     glfwSetWindowUserPointer(window, this);
 
-    glfwGetFramebufferSize(window, &width, &height);
+    glfwGetFramebufferSize(window, &framebufferSize.width, &framebufferSize.height);
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int width, int height)
     {
         Window *self = static_cast<Window *>(glfwGetWindowUserPointer(window));
 
-        self->width = width;
-        self->height = height;
+        self->framebufferSize.width = width;
+        self->framebufferSize.height = height;
 
         for (auto &callback : self->sizeChangedCallbacks)
         {
@@ -89,11 +91,12 @@ Window::Window(const std::string &title, const Settings &settings)
             {
                 GLFWmonitor *monitor = glfwGetPrimaryMonitor();
                 const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-                glfwSetWindowMonitor(window, nullptr, (mode->width - self->width) / 2, (mode->height - self->height) / 2, self->width, self->height, GLFW_DONT_CARE);
+                glfwSetWindowMonitor(window, nullptr, self->windowPos.x, self->windowPos.y, self->windowSize.width, self->windowSize.height, GLFW_DONT_CARE);
             }
             else
             {
-                glfwGetWindowSize(window, &self->width, &self->height);
+                glfwGetWindowPos(window, &self->windowPos.x, &self->windowPos.y);
+                glfwGetWindowSize(window, &self->windowSize.width, &self->windowSize.height);
                 GLFWmonitor *monitor = glfwGetPrimaryMonitor();
                 const GLFWvidmode *mode = glfwGetVideoMode(monitor);
                 glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
@@ -176,6 +179,6 @@ void Window::onMouseMoved(std::function<void(double deltaX, double deltaY)> call
 
 void Window::onSizeChanged(std::function<void(int width, int height)> callback)
 {
-    callback(width, height);
+    callback(framebufferSize.width, framebufferSize.height);
     sizeChangedCallbacks.push_back(callback);
 }

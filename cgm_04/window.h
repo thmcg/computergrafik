@@ -40,8 +40,18 @@ class Window
 
   private:
     GLFWwindow *window = nullptr;
-    int width = 0;
-    int height = 0;
+    struct {
+      int x = 0;
+      int y = 0;
+    } windowPos;
+    struct {
+      int width = 0;
+      int height = 0;
+    } windowSize;
+    struct {
+      int width = 0;
+      int height = 0;
+    } framebufferSize;
     bool fullscreen = false;
     double previousTime = 0.0;
     int frameCount = 0;
