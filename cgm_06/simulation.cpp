@@ -19,6 +19,8 @@
 
 #include "simulation.h"
 
+#include <numbers>
+
 Simulation::Simulation(const Settings &settings, Window &window)
 {
     walkSpeed = settings.walkSpeed;
@@ -39,8 +41,7 @@ Simulation::Simulation(const Settings &settings, Window &window)
         double yaw = cameraYaw + deltaX * 0.001 * mouseSpeed;
         double pitch = cameraPitch + deltaY * 0.001 * mouseSpeed;
 
-        if (pitch < -M_PI_2) pitch = -M_PI_2;
-        if (pitch > M_PI_2) pitch = M_PI_2;
+        pitch = std::clamp(pitch, -std::numbers::pi / 2, std::numbers::pi / 2);
 
         cameraYaw = yaw;
         cameraPitch = pitch;

@@ -19,18 +19,16 @@
 
 #pragma once
 
-#define _USE_MATH_DEFINES
-
-#include <cmath>
+#include <numbers>
 
 inline double deg2rad(double deg)
 {
-    return deg * M_PI / 180.0;
+    return deg * std::numbers::pi / 180.0;
 }
 
 inline double rad2deg(double rad)
 {
-    return rad * 180.0 / M_PI;
+    return rad * 180.0 / std::numbers::pi;
 }
 
 struct Vector3
