@@ -37,7 +37,7 @@ class Entity
     void setModelId(uint32_t modelId);
     void setPosition(Vector3 position);
     void setRotation(Vector3 rotation);
-    void setScale(float scale);
+    void setScale(double scale);
     void load();
     void update(double time, UpdateModelCallback);
     uint32_t getModelId() const;

@@ -57,7 +57,7 @@ Scene::Scene(const std::string &filename, LoadModelCallback loadModelCallback)
         }
         else if (type == "s")
         {
-            entities[entities.size() - 1].setScale(reader.getFloat());
+            entities[entities.size() - 1].setScale(reader.getDouble());
         }
     }
 }

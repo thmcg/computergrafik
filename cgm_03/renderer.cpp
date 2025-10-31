@@ -76,7 +76,7 @@ void Renderer::setViewport()
         double fov = 0.785; // 45deg
 
         double aspect = static_cast<double>(viewportWidth) / static_cast<double>(viewportHeight);
-        Matrix4 projectionMatrix = Matrix4::perspective(fov, aspect, zNear, zFar);
+        projectionMatrix = Matrix4::perspective(fov, aspect, zNear, zFar);
 
         glMatrixMode(GL_PROJECTION);
         glLoadMatrixf(projectionMatrix.toFloat());

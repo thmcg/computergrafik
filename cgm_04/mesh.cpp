@@ -21,10 +21,6 @@
 
 #include <glad/glad.h>
 
-Mesh::Mesh()
-{
-}
-
 Mesh::Mesh(const std::vector<Vertex> &vertices)
     : vertices(vertices)
 {

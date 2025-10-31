@@ -172,15 +172,14 @@ struct Matrix4
         return m;
     }
 
-    static Matrix4 identity()
+    static constexpr Matrix4 identity()
     {
-        static Matrix4 m = {
+        return {
             1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1
         };
-        return m;
     }
 
     Matrix4 operator*(const Matrix4 &b) const
@@ -215,7 +214,7 @@ struct Matrix4
             m11 * v.x + m21 * v.y + m31 * v.z + m41 * v.w,
             m12 * v.x + m22 * v.y + m32 * v.z + m42 * v.w,
             m13 * v.x + m23 * v.y + m33 * v.z + m43 * v.w,
-            m14 * v.x + m24 * v.y + m34 + v.z + m44 * v.w
+            m14 * v.x + m24 * v.y + m34 * v.z + m44 * v.w
         };
         return result;
     }

@@ -24,8 +24,6 @@
 class Camera
 {
   public:
-    Camera();
-    ~Camera();
     void setPosition(Vector3 position);
     const Vector3 &getPosition();
     void setRotation(Vector3 rotation);

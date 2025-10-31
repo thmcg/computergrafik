@@ -47,14 +47,10 @@ int main()
 
         double deltaTime = 0.0;
 
-        // The main loop consists of 3 ordered components: window -> simulation -> renderer.
-        // The window loop handles keyboard/mouse input and records time passed between frames.
         while (window.loop(deltaTime))
         {
-            // simulation loop handles gameplay, e.g. moves entities and camera by an internal logic.
             simulation.loop(deltaTime);
             renderer.setViewMatrix(simulation.getCameraViewMatrix());
-            // The renderer loop draws entities seen through the camera with the given matrices.
             renderer.loop();
         }
     }

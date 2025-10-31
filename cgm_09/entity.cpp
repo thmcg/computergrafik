@@ -39,7 +39,7 @@ void Entity::setRotation(Vector3 rotation)
     this->rotation = rotation;
 }
 
-void Entity::setScale(float scale)
+void Entity::setScale(double scale)
 {
     this->scale = scale;
 }

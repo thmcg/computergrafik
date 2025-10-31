@@ -22,9 +22,9 @@
 #include "cgmath.h"
 #include "texture.h"
 
+#include <array>
 #include <cstdint>
 #include <string>
-#include <array>
 
 class Shader
 {

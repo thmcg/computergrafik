@@ -18,6 +18,7 @@
  */
 
 #pragma once
+
 #include "cgmath.h"
 
 #include <fstream>
@@ -31,7 +32,7 @@ class FileReader
     ~FileReader();
     bool hasLine();
     std::string getString();
-    float getFloat();
+    double getDouble();
     Vector2 getVector2();
     Vector3 getVector3();
 

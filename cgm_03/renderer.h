@@ -37,4 +37,5 @@ class Renderer
     int viewportHeight = 0;
     bool resizeViewport = false;
     Matrix4 viewMatrix = Matrix4::translate(0.0, 0.0, -2.0);
+    Matrix4 projectionMatrix = Matrix4::identity();
 };

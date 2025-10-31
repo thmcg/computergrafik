@@ -19,14 +19,6 @@
 
 #include "camera.h"
 
-Camera::Camera()
-{
-}
-
-Camera::~Camera()
-{
-}
-
 void Camera::setPosition(Vector3 position)
 {
     this->position = position;

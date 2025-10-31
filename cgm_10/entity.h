@@ -39,7 +39,7 @@ class Entity
     void setModelId(uint32_t modelId);
     void setPosition(Vector3 position);
     void setRotation(Vector3 rotation);
-    void setScale(float scale);
+    void setScale(double scale);
     void load();
     void update(double time, const std::map<std::string, ScriptCallback> &scripts, UpdateModelCallback updateModel);
     void setScript(const std::string &script);
