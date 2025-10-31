@@ -42,6 +42,10 @@ $(foreach dir,$(SRC_DIRS),$(eval SRC_$(dir) := $(wildcard $(dir)/*.cpp)))
 #Define list of object files per chapter
 $(foreach dir,$(SRC_DIRS),$(eval OBJ_$(dir) := $(patsubst %.cpp,obj/%.o,$(SRC_$(dir)))))
 
+# Define dependency files per chapter
+$(foreach dir,$(SRC_DIRS),$(eval DEP_$(dir) := $$(OBJ_$(dir):.o=.d)))
+DEP_ALL := $(foreach dir,$(SRC_DIRS),$(DEP_$(dir)))
+
 # Define dependencies for each build target
 $(foreach dir,$(SRC_DIRS), $(eval bin/$(dir): $$(OBJ_$(dir))))
 
