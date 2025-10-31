@@ -22,20 +22,20 @@
 #include "cgmath.h"
 #include "texture.h"
 
-#include <cstdint>
-#include <string>
 #include <array>
+#include <cstdint>
+#include <optional>
+#include <string>
 
 class Shader
 {
   public:
-    Shader();
     Shader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile);
     ~Shader();
     void activate();
     void setMatrix4(const std::string &uniformName, const Matrix4 &matrix4);
     void setVector3(const std::string &uniformName, const Vector3 &vector3);
-    void setTexture(const std::string &textureName, Texture* texture);
+    void setTexture(const std::string &textureName, const std::optional<Texture> &texture);
 
   private:
     uint32_t shaderProgramID = 0;

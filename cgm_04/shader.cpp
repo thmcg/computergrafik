@@ -22,10 +22,6 @@
 #include <fstream>
 #include <glad/glad.h>
 
-Shader::Shader()
-{
-}
-
 Shader::Shader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile)
 {
     int success = 0;

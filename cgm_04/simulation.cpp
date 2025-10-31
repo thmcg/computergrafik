@@ -19,6 +19,7 @@
 
 #include "simulation.h"
 
+#include <algorithm>
 #include <numbers>
 
 Simulation::Simulation(const Settings &settings, Window &window)

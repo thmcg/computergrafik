@@ -44,16 +44,16 @@ Renderer::Renderer(const Settings &settings, Window &window)
         resizeViewport = true;
     });
 
-    mesh = new Mesh("meshes/thm.obj");
-    shader = new Shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
-    texture = new Texture("textures/thm_colors.jpg");
+    mesh.emplace("meshes/thm.obj");
+    shader.emplace("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
+    texture.emplace("textures/thm_colors.jpg");
 }
 
 Renderer::~Renderer()
 {
-    delete texture;
-    delete shader;
-    delete mesh;
+    texture.reset();
+    shader.reset();
+    mesh.reset();
 }
 
 void Renderer::loop()

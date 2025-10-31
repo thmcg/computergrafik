@@ -55,16 +55,16 @@ Renderer::Renderer(const Settings &settings, Window &window)
         Vertex({0.0, 0.6, 0.0}, {0.5, 1.0})
     };
 
-    mesh = new Mesh(vertices);
-    shader = new Shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
-    texture = new Texture("textures/thm2k.png");
+    mesh.emplace(vertices);
+    shader.emplace("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
+    texture.emplace("textures/thm2k.png");
 }
 
 Renderer::~Renderer()
 {
-    delete texture;
-    delete shader;
-    delete mesh;
+    texture.reset();
+    shader.reset();
+    mesh.reset();
 }
 
 void Renderer::loop()

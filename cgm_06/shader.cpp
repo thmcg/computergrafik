@@ -80,8 +80,10 @@ void Shader::setVector3(const std::string &uniformName, const Vector3 &vector3)
     glUniform3fv(uniformLocation, 1, values);
 }
 
-void Shader::setTexture(const std::string &uniformName, Texture *texture)
+void Shader::setTexture(const std::string &uniformName, const std::optional<Texture> &texture)
 {
+    if (!texture.has_value()) return;
+
     GLint uniformLocation = glGetUniformLocation(shaderProgramID, uniformName.c_str());
     if (uniformLocation >= 0)
     {

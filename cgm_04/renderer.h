@@ -25,6 +25,8 @@
 #include "shader.h"
 #include "window.h"
 
+#include <optional>
+
 class Renderer
 {
   public:
@@ -40,6 +42,6 @@ class Renderer
     bool resizeViewport = false;
     Matrix4 viewMatrix = Matrix4::translate(0.0, 0.0, -2.0);
     Matrix4 projectionMatrix = Matrix4::identity();
-    Mesh *mesh = nullptr;
-    Shader *shader = nullptr;
+    std::optional<Mesh> mesh = std::nullopt;
+    std::optional<Shader> shader = std::nullopt;
 };
