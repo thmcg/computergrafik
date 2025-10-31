@@ -168,24 +168,17 @@ struct Matrix4
 
     static Matrix4 perspective(double fov, double aspect, double zNear, double zFar)
     {
-        double h = zNear * tan(fov * 0.5);
+        double h = zNear * tan(fov);
         double w = h * aspect;
 
-        double left = -w;
-        double right = w;
-        double bottom = -h;
-        double top = h;
-
-        double m11 = 2 * zNear / (right - left);
-        double m22 = 2 * zNear / (top - bottom);
-        double m31 = (right + left) / (right - left);
-        double m32 = (top + bottom) / (top - bottom);
+        double m11 = 2 * zNear / w;
+        double m22 = 2 * zNear / h;
         double m33 = -(zFar + zNear) / (zFar - zNear);
         double m43 = -2 * zFar * zNear / (zFar - zNear);
 
         Matrix4 m = {
-            m11,   0, m31,   0,
-              0, m22, m32,   0,
+            m11,   0,   0,   0,
+              0, m22,   0,   0,
               0,   0, m33, m43,
               0,   0,  -1,   0
         };
