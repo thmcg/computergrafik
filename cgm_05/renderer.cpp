@@ -52,7 +52,8 @@ Renderer::Renderer(const Settings &settings, Window &window)
         Vertex({0.6, 0.0, 0.0}, {1.0, 0.5}),
         Vertex({-0.6, 0.0, 0.0}, {0.0, 0.5}),
         Vertex({0.6, 0.0, 0.0}, {1.0, 0.5}),
-        Vertex({0.0, 0.6, 0.0}, {0.5, 1.0})};
+        Vertex({0.0, 0.6, 0.0}, {0.5, 1.0})
+    };
 
     mesh = new Mesh(vertices);
     shader = new Shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
