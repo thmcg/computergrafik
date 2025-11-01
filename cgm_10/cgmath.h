@@ -169,31 +169,35 @@ struct Matrix4
 
     static Matrix4 perspective(double fov, double aspect, double zNear, double zFar)
     {
-        double h = zNear * tan(fov);
-        double w = h * aspect;
+        double yScale = 1.0 / tan(fov * 0.5);
+        double xScale = yScale / aspect;
 
-        double m11 = 2 * zNear / w;
-        double m22 = 2 * zNear / h;
-        double m33 = -(zFar + zNear) / (zFar - zNear);
-        double m43 = -2 * zFar * zNear / (zFar - zNear);
+        double q = zFar / (zNear - zFar);
+
+        double m11 = xScale;
+        double m22 = yScale;
+        double m33 = q;
+        double m34 = -1.0;
+        double m43 = q * zNear;
 
         Matrix4 m = {
             m11,   0,   0,   0,
               0, m22,   0,   0,
               0,   0, m33, m43,
-              0,   0,  -1,   0
+              0,   0, m34,   0
         };
         return m;
     }
 
-    static constexpr Matrix4 identity()
+    static const Matrix4 &identity()
     {
-        return {
+        static const Matrix4 m = {
             1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1
         };
+        return m;
     }
 
     Matrix4 operator*(const Matrix4 &b) const
