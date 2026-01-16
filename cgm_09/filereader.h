@@ -18,6 +18,7 @@
  */
 
 #pragma once
+
 #include "cgmath.h"
 
 #include <fstream>
