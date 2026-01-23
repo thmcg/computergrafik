@@ -26,6 +26,12 @@ $ make run_cgm_01
 $ make clean
 ```
 
+Zur Nutzung mehrerer CPU‑Kerne kann man make mit der Option `-j<n>` starten. Diese Option erlaubt bis zu n parallele Jobs (Prozesse). Beispiel für 14 parallele Jobs:
+
+```
+make -j14 cgm_01
+```
+
 
 ## Aufgabenstellung
 
