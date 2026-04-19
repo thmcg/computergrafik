@@ -5,5 +5,12 @@
         "slevesque.shader",
         "dmnsgn.vscode-wavefront",
         "moshfeu.compare-folders"
+    ],
+    "unwantedRecommendations": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cpp-devtools",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.makefile-tools"
     ]
 }
